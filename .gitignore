@@ -1,0 +1,13 @@
+*.pyc
+*.log
+*.xml
+*.xls
+*.xlsx
+*.ods
+*.dat
+*.sqlite
+*.txt
+
+__pycache__
+.idea
+Data/

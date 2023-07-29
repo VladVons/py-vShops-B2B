@@ -1,0 +1,24 @@
+{
+    "dir_route": "MVC/catalog/ctrl",
+    "cache_route": {
+        "max_age": 5,
+        "excl_route": ["RegSession"]
+    },
+    "lang": {
+        "type": "fs",
+        "dir": "MVC/catalog/lang"
+    },
+    "loader": {
+        "model": {
+            "type": "fs",
+            "module": "Task.SrvModel.Api",
+            "class": "ApiModel"
+        },
+        "img": {
+           "type": "url",
+            "url": "http://localhost:8083/api",
+            "user": "user01",
+            "password": "passw01"
+        }
+    }
+}

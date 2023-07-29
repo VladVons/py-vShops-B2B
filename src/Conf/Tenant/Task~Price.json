@@ -1,0 +1,34 @@
+{
+    "dir_data": "./Data/Tenant",
+    "comment": "Export price lists",
+    "include": [
+        "Task~Price_vendors.json",
+        "Task~Price_pcdata.json",
+        "Task~Price_mdm.json"
+    ],
+    "plugins": [
+        {"name": "Out_vShopTenant_db", "enable": true}
+    ],
+    "common": {
+        "sleep_loop": 0.01,
+        "save_cache": true
+    },
+    "plugin": {
+        "Out_vShopTenant_db": {
+            "sql": {
+                "parts": 100,
+                "lang": "ua"
+            },
+            "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
+            "depends": [
+                "-In_Price_comelit_xml",
+                "-In_Price_pcdata_xlsx",
+                "-In_Price_mdm_xlsx",
+                "In_Price_oster1c7_dbl",
+                "-In_Price_oster1c8_dbl"
+            ],
+            "img_loader": "{% file Conf/Task.SrvCtrl.Api.json:loader.img %}",
+            "img_conf": "{% file Conf/Task.SrvImg.Api.json %}"
+        }
+    }
+}
