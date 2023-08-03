@@ -1,6 +1,7 @@
 {
     "plugin": {
         "In_Crawl_kalina_xls": {
+            "file": "kalina.xls",
             "sheet": {
                 "default": {
                     "skip": 1,
@@ -15,6 +16,7 @@
             }
         },
         "In_Crawl_ean_txt": {
+            "file": "ean.txt",
             "encoding": "cp1251",
             "delimiter": ",",
             "sheet": {
@@ -28,6 +30,7 @@
             }
         },
         "In_Crawl_ean0_txt": {
+            "file": "ean0.txt",
             "sheet": {
                 "default": {
                     "fields": {
@@ -37,6 +40,7 @@
             }
         },
         "In_Crawl_model_xlsx": {
+            "file": "model.xlsx",
             "sheet": {
                 "default": {
                     "skip": 1,
@@ -51,6 +55,7 @@
             }
         },
         "In_Crawl_icecat_xlsx": {
+            "file": "icecat.xlsx",
             "sheet": {
                 "default": {
                     "skip": 1,
