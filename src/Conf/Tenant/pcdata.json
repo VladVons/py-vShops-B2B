@@ -1,6 +1,8 @@
 {
     "plugin": {
-        "In_Price_pcdata_xlsx": {
+        "In_pcdata": {
+            "class": "In_Price_pcdata_xlsx",
+            "file": "pcdata.xlsx",
             "export": {
                 "Out_vShopTenant_db": {
                     "sql": {

@@ -1,9 +1,12 @@
 {
     "dir_data": "./Data/Product0",
     "comment": "Grab EAN, IceCat etc",
+    "include": [
+        "vendors.json"
+    ],
     "plugins": [
-        {"name": "Out_vShopCrawl_db", "enable": false},
-        {"name": "Out_vShopTenantModel_db", "enable": true}
+        "-Out_vShopCrawl_db",
+        "Out_vShopTenantModel_db"
     ],
     "common": {
         "sleep_loop": 0.01,

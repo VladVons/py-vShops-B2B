@@ -62,36 +62,6 @@
                     }
                 }
             }
-        },
-        "In_Price_oster1c7_dbl": {
-            "encoding": "cp1251",
-            "export": {
-                "Out_vShopTenant_db": {
-                    "sql": {
-                        "tenant": "oster_tk22",
-                        "product0": "ean"
-                    }
-                }
-            }
-        },
-        "In_Price_oster1c8_dbl": {
-            "export": {
-                "Out_vShopTenant_db": {
-                    "sql": {
-                        "tenant": "oster_tr21",
-                        "product0": "ean"
-                    }
-                }
-            }
-        },
-        "In_Price_comelit_xml": {
-            "export": {
-                "Out_vShopTenant_db": {
-                    "sql": {
-                        "tenant": "comelit"
-                    }
-                }
-            }
         }
     }
 }

@@ -1,10 +1,12 @@
 {
     "plugin": {
-        "In_Price_mdm_xlsx": {
+        "In_mdm": {
+            "class": "In_Price_mdm_xlsx",
+            "file": "mdm.xlsx",
             "export": {
                 "Out_vShopTenant_db": {
                     "sql": {
-                        "alias": "mdm",
+                        "tenant": "mdm",
                         "auto_idt": true,
                         "product0": "model"
                     }

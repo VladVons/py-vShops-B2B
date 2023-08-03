@@ -1,0 +1,42 @@
+{
+    "plugin": {
+        "In_oster-tk22": {
+            "class": "In_Price_1c_dbl",
+            "file": "oster-tk22.dbl",
+            "encoding": "cp1251",
+            "export": {
+                "Out_vShopTenant_db": {
+                    "sql": {
+                        "tenant": "oster_tk22",
+                        "product0": "ean"
+                    }
+                }
+            }
+        },
+        "In_oster-tz20": {
+            "class": "In_Price_1c_dbl",
+            "file": "oster-tz20.dbl",
+            "encoding": "cp1251",
+            "export": {
+                "Out_vShopTenant_db": {
+                    "sql": {
+                        "tenant": "oster_tz20",
+                        "product0": "ean"
+                    }
+                }
+            }
+        },
+        "In_oster-tr21": {
+            "class": "In_Price_1c_dbl",
+            "file": "oster-tr21.dbl",
+            "export": {
+                "Out_vShopTenant_db": {
+                    "sql": {
+                        "tenant": "oster_tr21",
+                        "product0": "ean"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -2,12 +2,14 @@
     "dir_data": "./Data/Tenant",
     "comment": "Export price lists",
     "include": [
-        "Task~Price_vendors.json",
-        "Task~Price_pcdata.json",
-        "Task~Price_mdm.json"
+        "dbl.json",
+        "pcdata.json",
+        "mdm.json",
+        "misc.json"
     ],
     "plugins": [
-        {"name": "Out_vShopTenant_db", "enable": true}
+        "-In_oster-tk22",
+        "Out_vShopTenant_db"
     ],
     "common": {
         "sleep_loop": 0.01,
@@ -21,11 +23,12 @@
             },
             "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
             "depends": [
-                "-In_Price_comelit_xml",
-                "-In_Price_pcdata_xlsx",
-                "-In_Price_mdm_xlsx",
-                "In_Price_oster1c7_dbl",
-                "-In_Price_oster1c8_dbl"
+                "-In_comelit",
+                "-In_pcdata",
+                "-In_mdm",
+                "-In_oster-tk22",
+                "-In_oster-tz20",
+                "In_oster-tr21"
             ],
             "img_loader": "{% file Conf/Task.SrvCtrl.Api.json:loader.img %}",
             "img_conf": "{% file Conf/Task.SrvImg.Api.json %}"

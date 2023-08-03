@@ -1,0 +1,16 @@
+{
+    "plugin": {
+        "In_comelit": {
+            "class": "In_Price_comelit_xml",
+            "file": "comelit.xml",
+            "export": {
+                "Out_vShopTenant_db": {
+                    "sql": {
+                        "tenant": "comelit",
+                        "product0": "???"
+                    }
+                }
+            }
+        }
+    }
+}
