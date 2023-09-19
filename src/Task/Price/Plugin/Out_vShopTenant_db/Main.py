@@ -23,6 +23,7 @@ class TSqlConf():
     lang: str
     tenant: str
     product0: str
+    currency: str = ''
     auto_idt: bool = False
     parts: int = 100
 
@@ -66,6 +67,7 @@ class TSql(TSqlBase):
         self.ImgApi = aImgApi
         self.CategoryIdt = {}
         self.ProductIdt = {}
+        self.CurrencyRate = 1
 
     async def _ImgUpdate(self, aData):
         Url = f'{self.ImgApi.Url}/system'
@@ -95,6 +97,17 @@ class TSql(TSqlBase):
 
     async def ProductModelUnknown(self):
         return await self.ExecQuery(__package__, 'fmtGet_ModelUnknown.sql', {'aTenantId': self.tenant_id})
+
+    async def GetCurrencyRate(self):
+        if (self.Conf.currency):
+            Query = f'''
+                select alias, rate
+                from ref_currency
+                where enabled and alias = '{self.Conf.currency}'
+            '''
+            Dbl = await TDbExecPool(self.Db.Pool).Exec(Query)
+            assert (not Dbl.IsEmpty()), f'Unknown currency {self.Conf.currency}'
+            self.CurrencyRate = Dbl.Rec.rate
 
     async def Category_Create(self, aData: list):
         async def Category(aData: list):
@@ -402,7 +415,7 @@ class TSql(TSqlBase):
                 Key = (self.ProductIdt[Rec.id], self.price_id)
                 if (Key not in Uniq):
                     Uniq[Key] = ''
-                    Value = f'({self.ProductIdt[Rec.id]}, {self.price_id}, {Rec.price})'
+                    Value = f'({self.ProductIdt[Rec.id]}, {self.price_id}, {Rec.price * self.CurrencyRate})'
                     Values.append(Value)
 
             Query = f'''
@@ -460,7 +473,6 @@ class TSql(TSqlBase):
             '''
             return await TDbExecPool(self.Db.Pool).Exec(Query)
 
-
         Log.Print(1, 'i', 'Product')
         await self.DisableTable('ref_product')
         await Product(aDbl)
@@ -510,6 +522,7 @@ class TMain(TFileBase):
 
     async def InsertToDb(self, aDbCategory: TDbCategory, aDbProductEx: TDbProductEx):
         await self.Sql.LoadTenantConf(self.Sql.Conf.tenant, self.Sql.Conf.lang)
+        await self.Sql.GetCurrencyRate()
 
         Data = TCatalogToDb(aDbCategory).Get()
         await self.Sql.Category_Create(Data)
