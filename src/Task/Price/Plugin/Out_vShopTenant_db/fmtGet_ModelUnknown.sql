@@ -38,3 +38,5 @@ from
     wt1
 left join wt2 on
     (wt1.model = wt2.model)
+order by
+    model

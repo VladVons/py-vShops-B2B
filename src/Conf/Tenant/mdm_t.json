@@ -1,0 +1,28 @@
+{
+    "plugin": {
+        "In_mdm_t": {
+            "class": "In_Price_mdm_txt",
+            "file": "mdm.txt",
+            "export": {
+                "Out_vShopTenant_db": {
+                    "sql": {
+                        "tenant": "mdm",
+                        "auto_idt": true,
+                        "product0": "model"
+                    }
+                },
+                "Out_Save_txt": {
+                    "TDbProductEx": {
+                        "len": 70,
+                        "fields": ["category_id", "model", "name", "available", "price"]
+                    }
+                }
+            },
+            "sheet": {
+                "default": {
+                    "skip": 0
+                }
+            }
+        }
+    }
+}

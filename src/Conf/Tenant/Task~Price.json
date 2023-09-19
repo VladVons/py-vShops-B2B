@@ -5,6 +5,7 @@
         "dbl.json",
         "pcdata.json",
         "mdm.json",
+        "mdm_t.json",
         "misc.json"
     ],
     "plugins": [
@@ -26,9 +27,10 @@
                 "-In_comelit",
                 "-In_pcdata",
                 "-In_mdm",
+                "In_mdm_t",
                 "-In_oster-tk22",
                 "-In_oster-tz20",
-                "In_oster-tr21"
+                "-In_oster-tr21"
             ],
             "img_loader": "{% file Conf/Task.SrvCtrl.Api.json:loader.img %}",
             "img_conf": "{% file Conf/Task.SrvImg.Api.json %}"
