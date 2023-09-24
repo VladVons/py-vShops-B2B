@@ -101,7 +101,7 @@ class TSql(TSqlBase):
     async def GetCurrencyRate(self):
         if (self.Conf.currency):
             Query = f'''
-                select alias, rate
+                select alias, rate::float
                 from ref_currency
                 where enabled and alias = '{self.Conf.currency}'
             '''
@@ -415,7 +415,8 @@ class TSql(TSqlBase):
                 Key = (self.ProductIdt[Rec.id], self.price_id)
                 if (Key not in Uniq):
                     Uniq[Key] = ''
-                    Value = f'({self.ProductIdt[Rec.id]}, {self.price_id}, {Rec.price * self.CurrencyRate})'
+                    Price = Rec.price if (self.CurrencyRate == 1) else int(float(Rec.price) / self.CurrencyRate)
+                    Value = f'({self.ProductIdt[Rec.id]}, {self.price_id}, {Price})'
                     Values.append(Value)
 
             Query = f'''

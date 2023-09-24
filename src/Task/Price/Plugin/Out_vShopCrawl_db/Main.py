@@ -39,7 +39,7 @@ def InputKey(aMsg: str, aKeys: list):
 
 @DDataClass
 class TSqlConf():
-    lang_id: int
+    lang: str
     parser: str
     max_days: int = 30
     parts: int = 100
@@ -155,9 +155,10 @@ class TSql(TSqlBase):
             DblCur = await TDbExecPool(self.Db.Pool).Exec(Query)
             UrlSize = DblCur.ExportPair('src_url', 'src_size')
 
+            Answer = ''
             UrlD = []
-            for Idx, x in enumerate(Images):
-                Ext = x.rsplit('.', maxsplit=1)[-1]
+            for Idx, xImage in enumerate(Images):
+                Ext = xImage.rsplit('.', maxsplit=1)[-1]
                 #Hash = hashlib.md5(aCode.encode('utf-8')).hexdigest()[8::3]
                 #Dir = '/'.join(Hash[:2])
                 #Name = f'{Dir}/{Hash}_{aCode}_{Idx}.{Ext}'
@@ -165,17 +166,20 @@ class TSql(TSqlBase):
                 Name = f'{self.TenantId}/{self.Parser.CodeType[::-1]}/{CodeX[-2:]}/{CodeX}_{Idx}.{Ext}'
 
                 if (self.Parser.Moderate):
-                    webbrowser.open(x, new=0, autoraise=False)
                     print()
                     print(f"Code: {aCode}, name {aInfo['name']}, {Idx}")
                     print('\n'.join(Images[Idx:]))
-                    Answer = InputKey('Add image ?', ['y', 'n', 'c'])
-                    if (Answer == 'y'):
-                        UrlD.append([x, Name, UrlSize.get(x, 0), aCode])
-                    elif (Answer == 'c'):
-                        break
+                    if (Answer == 'a'):
+                        UrlD.append([xImage, Name, UrlSize.get(xImage, 0), aCode])
+                    else:
+                        webbrowser.open(xImage, new=0, autoraise=False)
+                        Answer = InputKey(f'Add image {Name}?', ['y', 'n', 'c', 'a'])
+                        if (Answer == 'y'):
+                            UrlD.append([xImage, Name, UrlSize.get(xImage, 0), aCode])
+                        elif (Answer == 'c'):
+                            break
                 else:
-                    UrlD.append([x, Name, UrlSize.get(x, 0), aCode])
+                    UrlD.append([xImage, Name, UrlSize.get(xImage, 0), aCode])
 
             if (not UrlD):
                 return []
@@ -230,7 +234,7 @@ class TSql(TSqlBase):
                         insert into ref_product0_lang (product_id, lang_id, title, features, descr)
                         select
                             wrp.id,
-                            {self.Conf.lang_id},
+                            {self.lang_id},
                             '{Name}',
                             {Features},
                             '{Descr}'
@@ -259,7 +263,7 @@ class TSql(TSqlBase):
                         insert into ref_product0_to_category (product_id, category_id)
                         select
                             wrp.id,
-                            (select ref_product0_category_create({self.Conf.lang_id}, '{Category}'))
+                            (select ref_product0_category_create({self.lang_id}, '{Category}'))
                         from wrp
                     )
                 select id
@@ -358,6 +362,8 @@ class TMain(TFileBase):
 
 
     async def InsertToDb(self, aDbCrawl: TDbCrawl):
+        await self.Sql.LoadLang(self.Sql.Conf.lang)
+
         #await self.Sql.EanPotentialFind(aDbCrawl)
         #await self.Sql.EanRemoveBad()
         await self.Sql.Product0_Create(aDbCrawl)

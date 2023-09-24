@@ -14,8 +14,8 @@ from ..CommonDb import TDbCrawl
 
 @DDataClass
 class TSqlConf():
-    lang_id: int
-    alias: str
+    lang: str
+    tenant: str
     parts: int = 100
 
 class TSql(TSqlBase):
@@ -74,5 +74,5 @@ class TMain(TFileBase):
         self.Sql = TSql(aDb, SqlConf)
 
     async def InsertToDb(self, aDbCrawl: TDbCrawl):
-        await self.Sql.LoadTenantConf(self.Sql.Conf.alias)
+        await self.Sql.LoadTenantConf(self.Sql.Conf.tenant, self.Sql.Conf.lang)
         await self.Sql.Product0(aDbCrawl)
