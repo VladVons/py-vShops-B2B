@@ -1,0 +1,23 @@
+{
+    "plugin": {
+       "Out_vShopClear1_db": {
+            "class": "Out_vShopClear_db",
+            "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
+            "tables": [
+                "reg_product_stock",
+                "hist_page_view",
+                "hist_product_stock",
+                "hist_ref_product_price",
+                "hist_session",
+                "ref_product",
+                "ref_product_category",
+                "ref_product_category_lang",
+                "ref_product_idt",
+                "ref_product_image",
+                "ref_product_lang",
+                "ref_product_price",
+                "ref_product_to_category"
+            ]
+        }
+    }
+}

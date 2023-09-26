@@ -1,4 +1,4 @@
-# Created: 2023.06.22
+# Created: 2023.09.26
 # Author: Vladimir Vons <VladVons@gmail.com>
 # License: GNU, see LICENSE for more details
 
@@ -8,7 +8,7 @@ from Inc.Sql import TDbPg, TDbAuth
 from .Main import TMain
 
 
-class TOut_vShopTenantModel_db(TPluginBase):
+class TOut_vShopClear_db(TPluginBase):
     async def Run(self):
         Conf = self.Conf.GetKey('auth')
         DbAuth = TDbAuth(**Conf)
@@ -16,7 +16,6 @@ class TOut_vShopTenantModel_db(TPluginBase):
         await Db.Connect()
 
         Main = TMain(self, Db)
-        Dbl = self.GetParamDependsIdx('TDbCrawl')
-        await Main.InsertToDb(Dbl)
+        await Main.Clear()
 
         await Db.Close()

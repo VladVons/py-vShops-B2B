@@ -25,7 +25,7 @@
             "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
             "depends": [
                 "-In_comelit",
-                "-In_pcdata",
+                "In_pcdata",
                 "-In_mdm",
                 "In_mdm_t",
                 "-In_oster-tk22",

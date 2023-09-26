@@ -1,0 +1,10 @@
+{
+    "dir_data": "./Data/Sys",
+    "comment": "System routines",
+    "include": [
+        "clear.json"
+    ],
+    "plugins": [
+        "Out_vShopClear1_db"
+    ]
+}

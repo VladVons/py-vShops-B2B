@@ -73,6 +73,7 @@ class TIn_Price_pcdata_xlsx(TPluginBase):
         DbProductEx = TDbProductEx()
         DbCategory = TDbCategory()
         Engine = None
+        Cached = False
         for xKey, xVal in XTable.items():
             Parser = xVal['parser'](self)
             if (Engine):
@@ -81,7 +82,8 @@ class TIn_Price_pcdata_xlsx(TPluginBase):
                 Engine = Parser.InitEngine()
             Parser.SetSheet(xKey)
             await Parser.Load()
+            Cached |= Parser.Cached
             self.ToDbProductEx(Parser, DbProductEx, xVal['category_id'])
             DbCategory.RecAdd().SetAsDict({'id': xVal['category_id'], 'parent_id': 0, 'name': xVal['category']})
 
-        return {'TDbCategory': DbCategory, 'TDbProductEx': DbProductEx}
+        return {'cached': Cached, 'TDbCategory': DbCategory, 'TDbProductEx': DbProductEx}

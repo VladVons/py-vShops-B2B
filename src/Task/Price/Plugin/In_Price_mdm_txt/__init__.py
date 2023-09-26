@@ -13,4 +13,4 @@ class TIn_Price_mdm_txt(TPluginBase):
         Product.InitEngine()
         await Product.Load()
 
-        return {'TDbCategory': Product.DblCategory, 'TDbProductEx': Product.Dbl}
+        return {'cached': Product.Cached, 'TDbCategory': Product.DblCategory, 'TDbProductEx': Product.Dbl}

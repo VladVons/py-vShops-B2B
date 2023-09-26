@@ -111,6 +111,13 @@ class TSql(TSqlBase):
 
     async def Category_Create(self, aData: list):
         async def Category(aData: list):
+            Query = f'''
+                insert into ref_product_category (idt, tenant_id)
+                values (0, {self.tenant_id})
+                on conflict (idt, tenant_id) do nothing
+            '''
+            await TDbExecPool(self.Db.Pool).Exec(Query)
+
             Dbls: list[TDbList] = await SCategory(aData, self.Conf.parts)
             Dbl = Dbls[0].New()
             Dbl.Append(Dbls)
