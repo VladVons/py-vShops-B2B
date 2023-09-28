@@ -27,7 +27,7 @@ class TParserBase():
     CodeType = 'ean'
     Headers = {}
     ImageNeed = True
-    Moderate = True
+    Moderate = 1
     SkipFeatures = {}
     UrlRoot = ''
 

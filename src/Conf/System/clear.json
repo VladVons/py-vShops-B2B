@@ -1,14 +1,12 @@
 {
     "plugin": {
-       "Out_vShopClear1_db": {
+       "Out_vShopClearProduct_db": {
             "class": "Out_vShopClear_db",
             "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
             "tables": [
                 "reg_product_stock",
-                "hist_page_view",
                 "hist_product_stock",
                 "hist_ref_product_price",
-                "hist_session",
                 "ref_product",
                 "ref_product_category",
                 "ref_product_category_lang",
@@ -18,6 +16,30 @@
                 "ref_product_price",
                 "ref_product_to_category"
             ]
-        }
+        },
+       "Out_vShopClearProduct0_db": {
+            "class": "Out_vShopClear_db",
+            "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
+            "tables": [
+                "ref_product0",
+                "ref_product0_barcode",
+                "ref_product0_category",
+                "ref_product0_category_lang",
+                "ref_product0_crawl",
+                "ref_product0_image",
+                "ref_product0_lang",
+                "ref_product0_to_category"
+            ]
+        },
+       "Out_vShopClearMisc_db": {
+            "class": "Out_vShopClear_db",
+            "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
+            "tables": [
+                "hist_page_view",
+                "hist_session"
+            ]
+        },
+
+
     }
 }

@@ -1,0 +1,70 @@
+{
+    "dir_data": "./Data/IceCat",
+    "comment": "IceCat",
+    "plugins": [
+        "mdm"
+    ],
+    "common": {
+        "sleep_loop": 0.01,
+        "save_cache": true
+    },
+    "plugin": {
+        "Out_vShopCrawl_db": {
+            "sql": {
+                "parts": 10,
+                "lang": "ua",
+                "max_conn": 1,
+                "rand_sleep": [0.1, 1.1],
+                "parser": "icecat_biz"
+            },
+            "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
+            "depends": [
+                "In_Crawl_icecat_xlsx"
+            ],
+            "img_loader": "{% file Conf/Task.SrvCtrl.Api.json:loader.img %}",
+            "img_conf": "{% file Conf/Task.SrvImg.Api.json %}"
+        },
+        "Out_vShopTenantModel_db": {
+            "sql": {
+                "lang": "ua",
+                "tenant": "MyTenant",
+                "parts": 50
+            },
+            "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
+            "depends": [
+                "Out_vShopCrawl_db",
+                "In_Crawl_icecat_xlsx"
+            ]
+        },
+        "In_Crawl_icecat_xlsx": {
+            "file": "-MyFile-",
+            "sheet": {
+                "default": {
+                    "skip": 1,
+                    "fields": {
+                        "model": 1,
+                        "code": 2,
+                        "url": 3,
+                        "comment": 4
+                    }
+                }
+            }
+        },
+        "mdm": {
+            "class": "Fake",
+            "joins": {
+                "In_Crawl_icecat_xlsx": {
+                    "file": "mdm.xlsx"
+                },
+                "Out_vShopTenantModel_db": {
+                    "sql": {
+                        "tenant": "mdm"
+                    }
+                }
+            },
+            "depends": [
+                "Out_vShopTenantModel_db"
+            ]
+        }
+    }
+}

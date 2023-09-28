@@ -3,6 +3,7 @@
 # License: GNU, see LICENSE for more details
 
 
+import os
 import random
 import json
 import asyncio
@@ -55,6 +56,14 @@ class TSql(TSqlBase):
         self.ConfCrawl: TDbList
         self.Parser: TParserBase = None
         self.TenantId = 0
+
+    async def _InitProduct0Category(self):
+        Query = '''
+            insert into ref_product0_category (id)
+            values (0)
+            on conflict (id) do nothing
+        '''
+        await TDbExecPool(self.Db.Pool).Exec(Query)
 
     async def GetConfCrawl(self, aHost: str) -> TDbList:
         Query = f'''
@@ -165,7 +174,7 @@ class TSql(TSqlBase):
                 CodeX = CryptSimple(aCode, 71)
                 Name = f'{self.TenantId}/{self.Parser.CodeType[::-1]}/{CodeX[-2:]}/{CodeX}_{Idx}.{Ext}'
 
-                if (self.Parser.Moderate):
+                if (self.Parser.Moderate == 1):
                     print()
                     print(f"Code: {aCode}, name {aInfo['name']}, {Idx}")
                     print('\n'.join(Images[Idx:]))
@@ -178,6 +187,10 @@ class TSql(TSqlBase):
                             UrlD.append([xImage, Name, UrlSize.get(xImage, 0), aCode])
                         elif (Answer == 'c'):
                             break
+                elif (self.Parser.Moderate == 2):
+                    PathImg = f'/home/vladvons/Projects/py/py-vShops/src/Data/img/product/{Name}'
+                    if (os.path.exists(PathImg)):
+                        UrlD.append([xImage, Name, UrlSize.get(xImage, 0), aCode])
                 else:
                     UrlD.append([xImage, Name, UrlSize.get(xImage, 0), aCode])
 
@@ -189,7 +202,7 @@ class TSql(TSqlBase):
                     'param': {
                         'aUrlD': UrlD,
                         'aDir': 'product',
-                        'aDownload': True
+                        'aDownload': (self.Parser.Moderate != 2)
                     }
                 })
             assert('err' not in DataImg), DataImg['err']
@@ -338,6 +351,7 @@ class TSql(TSqlBase):
         assert(not self.ConfCrawl.IsEmpty()), f'No DB config for {self.Parser.UrlRoot}'
 
         await ReportCrawl()
+        await self._InitProduct0Category()
 
         Log.Print(1, 'i', 'Product0')
         await SProduct0(aDbl, self.Conf.parts)
