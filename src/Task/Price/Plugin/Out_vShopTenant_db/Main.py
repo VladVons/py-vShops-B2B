@@ -26,6 +26,7 @@ class TSqlConf():
     currency: str = ''
     auto_idt: bool = False
     parts: int = 100
+    min_qty: int = 0
 
 class TCatalogToDb():
     def __init__(self, aDbl: TDbList):
@@ -180,8 +181,9 @@ class TSql(TSqlBase):
                     Log.Print(1, 'i', f'Not uniq ID. {Rec.GetAsDictVal()}')
                     Log.Print(1, 'i', f'Prev record. {Uniq.get(Id)}')
                 else:
-                    Uniq[Id] = Rec.GetAsDictVal()
-                    Res.RecAdd(Rec.Data)
+                    if (Rec.qty >= self.Conf.min_qty):
+                        Uniq[Id] = Rec.GetAsDictVal()
+                        Res.RecAdd(Rec.Data)
             return Res
 
         async def Product(aDbl: TDbProductEx):
@@ -401,9 +403,25 @@ class TSql(TSqlBase):
         async def SProduct_ToCategory(aDbl: TDbProductEx, _aMax: int, aIdx: int = 0, aLen: int = 0) -> TDbList:
             print('SProduct_ToCategory()', aIdx, aLen)
 
+            Values = ListIntToComma(aDbl.ExportList('id'))
+            Query = f'''
+                select
+                    idt as product_idt,
+                    category_idt
+                from
+                    ref_product_idt
+                where
+                    (tenant_id = {self.tenant_id}) and
+                    (idt in ({Values})) and
+                    (category_idt is not null)
+            '''
+            Dbl = await TDbExecPool(self.Db.Pool).Exec(Query)
+
+            IdtPairs = Dbl.ExportPair('product_idt', 'category_idt')
             Values = []
             for Rec in aDbl:
-                Values.append(f'({self.ProductIdt[Rec.id]}, {self.CategoryIdt[Rec.category_id]})')
+                CategoryIdt = IdtPairs.get(Rec.id, Rec.category_id)
+                Values.append(f'({self.ProductIdt[Rec.id]}, {self.CategoryIdt[CategoryIdt]})')
 
             Query = f'''
                 insert into ref_product_to_category (product_id, category_id)

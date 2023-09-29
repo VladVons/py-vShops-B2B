@@ -10,6 +10,7 @@
 
 import re
 #
+from Inc.Util.Str import ToFloat
 from Inc.ParserX.Parser_txt import TParser_txt
 from IncP.Log import Log
 from ..CommonDb import TDbCategory, TDbProductEx
@@ -61,8 +62,8 @@ class TProduct(TParser_txt):
                 'category_id': CategoryId,
                 'code': Model.lower(),
                 'name': Body,
-                'price': Price,
-                'qty': Qty
+                'price': ToFloat(Price),
+                'qty': int(Qty)
                 })
             self.Dbl.Rec.Flush()
         else:

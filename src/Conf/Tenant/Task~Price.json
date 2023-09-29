@@ -2,15 +2,14 @@
     "dir_data": "./Data/Tenant",
     "comment": "Export price lists",
     "include": [
-        "dbl.json",
+        "-1c.json",
         "pcdata.json",
-        "mdm.json",
-        "mdm_t.json",
-        "misc.json"
+        "-mdm.json",
+        "mdm_t.json"
     ],
     "plugins": [
-        "-In_oster-tk22",
-        "Out_vShopTenant_db"
+        "Out_vShopTenant_db",
+        "-Out_Save_txt"
     ],
     "common": {
         "sleep_loop": 0.01,
@@ -27,13 +26,19 @@
                 "-In_comelit",
                 "-In_pcdata",
                 "-In_mdm",
-                "In_mdm_t",
-                "-In_oster-tk22",
-                "-In_oster-tz20",
-                "-In_oster-tr21"
+                "In_mdm_t"
             ],
             "img_loader": "{% file Conf/Task.SrvCtrl.Api.json:loader.img %}",
             "img_conf": "{% file Conf/Task.SrvImg.Api.json %}"
+        },
+        "Out_Save_txt" : {
+            "depends": [
+                "In_mdm_t"
+            ],
+            "dir": "./Data/Pl/Out",
+            "db_list": {
+                "len": 50
+            }
         }
     }
 }

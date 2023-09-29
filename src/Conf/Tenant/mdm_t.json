@@ -9,13 +9,14 @@
                         "tenant": "mdm",
                         "currency": "pln",
                         "auto_idt": true,
-                        "product0": "model"
+                        "product0": "model",
+                        "min_qty": 1
                     }
                 },
                 "Out_Save_txt": {
                     "TDbProductEx": {
                         "len": 70,
-                        "fields": ["category_id", "model", "name", "available", "price"]
+                        "fields": ["category_id", "code", "name", "qty", "price"]
                     }
                 }
             },
