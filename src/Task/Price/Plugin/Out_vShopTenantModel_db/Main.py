@@ -50,6 +50,7 @@ class TSql(TSqlBase):
                     Values.append(f"('{Rec.model}', 'model', {ProductId}, {self.tenant_id})")
 
             if (Values):
+                # no serial column
                 Query = f'''
                     insert into ref_product_product0(code, product_en, product0_id, tenant_id)
                     values {', '.join(Values)}

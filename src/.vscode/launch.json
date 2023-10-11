@@ -9,8 +9,9 @@
             "console": "integratedTerminal",
             "purpose":["debug-in-terminal"],
             "justMyCode": true,
+            "__args": ["--conf", "System"],
+            "_args": ["--conf", "IceCat"],
             "args": ["--conf", "Tenant"],
-            "args_": ["--conf", "IceCat"],
             "env": {"name": "EnvVal"}
          }
     ]

@@ -14,6 +14,7 @@ from Inc.Sql.ADb import TDbExecPool, ListIntToComma, ListToComma
 from Inc.Sql.DbPg import TDbPg
 from Inc.Util.Obj import DeepGetByList
 from Inc.Util.Str import ToHashW
+from Inc.Util.Num import RoundNear
 from IncP.Log import Log
 from ..CommonDb import TDbCategory, TDbProductEx
 
@@ -27,6 +28,7 @@ class TSqlConf():
     auto_idt: bool = False
     parts: int = 100
     min_qty: int = 0
+    price_round: int = 1
 
 class TCatalogToDb():
     def __init__(self, aDbl: TDbList):
@@ -99,6 +101,17 @@ class TSql(TSqlBase):
     async def ProductModelUnknown(self):
         return await self.ExecQuery(__package__, 'fmtGet_ModelUnknown.sql', {'aTenantId': self.tenant_id})
 
+    async def GetProductsMargin(self, aProductIds: list[int]):
+        ProductIds = ListIntToComma(aProductIds)
+        Dbl = await self.ExecQuery(__package__, 'fmtGet_ProductMargin.sql', {'aProductIds': ProductIds})
+        Res = {}
+        for Rec in Dbl:
+            Prev = 1
+            for xMargin in Rec.margin:
+                Prev = xMargin if xMargin else Prev
+            Res[Rec.product_id] = Prev
+        return Res
+
     async def GetCurrencyRate(self):
         if (self.Conf.currency):
             Query = f'''
@@ -112,10 +125,18 @@ class TSql(TSqlBase):
 
     async def Category_Create(self, aData: list):
         async def Category(aData: list):
+            # Query = f'''
+            #     insert into ref_product_category (idt, tenant_id)
+            #     values (0, {self.tenant_id})
+            #     on conflict (idt, tenant_id) do nothing
+            # '''
             Query = f'''
                 insert into ref_product_category (idt, tenant_id)
-                values (0, {self.tenant_id})
-                on conflict (idt, tenant_id) do nothing
+                select idt, tenant_id
+                from (values (0, {self.tenant_id})) src(idt, tenant_id)
+                where not exists (
+                    select 1 from ref_product_category dst where (dst.idt = src.idt) and (dst.tenant_id = src.tenant_id)
+                )
             '''
             await TDbExecPool(self.Db.Pool).Exec(Query)
 
@@ -129,13 +150,26 @@ class TSql(TSqlBase):
             print('SCategory()', aIdx, aLen)
 
             Values = [f"({Row['id']}, {Row['parent_id']}, {self.tenant_id})" for Row in aData]
+            # Query = f'''
+            #     insert into ref_product_category (idt, parent_idt, tenant_id)
+            #     values {', '.join(Values)}
+            #     on conflict (idt, tenant_id) do update
+            #     set enabled = true
+            #     returning (id, idt)
+            # '''
             Query = f'''
-                insert into ref_product_category (idt, parent_idt, tenant_id)
-                values {', '.join(Values)}
-                on conflict (idt, tenant_id) do update
-                set enabled = true
-                returning (id, idt)
-            '''
+                with src (idt, parent_idt, tenant_id) as (
+                    values {', '.join(Values)}
+                )
+                merge into ref_product_category as dst
+                using src
+                on (dst.idt = src.idt) and (dst.tenant_id = src.tenant_id)
+                when matched then
+                    update set enabled = true
+                when not matched then
+                    insert (idt, parent_idt, tenant_id)
+                    values (src.idt, src.parent_idt, src.tenant_id)
+                '''
             await TDbExecPool(self.Db.Pool).Exec(Query)
 
             Ids = [Row['id'] for Row in aData]
@@ -155,6 +189,7 @@ class TSql(TSqlBase):
                 f"({self.CategoryIdt[Row['id']]}, {self.lang_id}, '{Row['name'].translate(self.Escape)}')"
                 for Row in aData
             ]
+            # no serial column
             Query = f'''
                 insert into ref_product_category_lang (category_id, lang_id, title)
                 values {', '.join(Values)}
@@ -199,6 +234,8 @@ class TSql(TSqlBase):
                 Values = ', '.join(Values)
 
                 # (tenant_id, title) can be duplicated and DO UPDATE causes error. Use DO NOTHING
+                # on insert ref_product_idt causes insert into ref_product too
+                # no serial column
                 Query = f'''
                     with
                         wt1 as (
@@ -230,24 +267,47 @@ class TSql(TSqlBase):
 
             Uniq = {}
             Values = []
+            Idts = []
             for Rec in aDbl:
                 Idt = Rec.GetField('id')
                 Key = (Idt, self.tenant_id)
                 if (Key not in Uniq):
                     Uniq[Key] = ''
+                    Idts.append(Idt)
 
                     Value = f"({Idt}, {self.tenant_id}, ({Rec.qty} > 0), '{Rec.code}')"
                     Values.append(Value)
 
             if (Values):
+                # Query = f'''
+                #     insert into ref_product (idt, tenant_id, enabled, model)
+                #     values {', '.join(Values)}
+                #     on conflict (idt, tenant_id) do update
+                #     set enabled = excluded.enabled, model = excluded.model
+                #     returning id, idt
+                # '''
                 Query = f'''
-                    insert into ref_product (idt, tenant_id, enabled, model)
-                    values {', '.join(Values)}
-                    on conflict (idt, tenant_id) do update
-                    set enabled = excluded.enabled, model = excluded.model
-                    returning id, idt
+                    with src (idt, tenant_id, enabled, model) as (
+                        values {', '.join(Values)}
+                    )
+                    merge into ref_product as dst
+                    using src
+                    on (dst.idt = src.idt) and (dst.tenant_id = src.tenant_id)
+                    when matched then
+                        update set enabled = src.enabled, model = src.model
+                    when not matched then
+                        insert (idt, tenant_id, enabled, model)
+                        values (src.idt, src.tenant_id, src.enabled, src.model)
                 '''
-                return await TDbExecPool(self.Db.Pool).Exec(Query)
+                await TDbExecPool(self.Db.Pool).Exec(Query)
+
+                Query = f'''
+                    select id, idt
+                    from ref_product
+                    where (tenant_id = {self.tenant_id}) and (idt in ({ListIntToComma(Idts)}))
+                '''
+                Res = await TDbExecPool(self.Db.Pool).Exec(Query)
+                return Res
 
         @DASplitDbl
         async def SProduct_Product0(aDbl: TDbProductEx, _aMax: int, aIdx: int = 0, aLen: int = 0) -> TDbList:
@@ -336,13 +396,14 @@ class TSql(TSqlBase):
                     Value = f"({self.ProductIdt[Rec.id]}, {self.lang_id}, '{Rec.name.translate(self.Escape)}', '{Descr}', {Features})"
                     Values.append(Value)
 
+            # no serial column
             Query = f'''
                 insert into ref_product_lang (product_id, lang_id, title, descr, features)
                 values {', '.join(Values)}
                 on conflict (product_id, lang_id) do update
                 set title = excluded.title, features = excluded.features, descr = excluded.descr
             '''
-            return await TDbExecPool(self.Db.Pool).Exec(Query)
+            await TDbExecPool(self.Db.Pool).Exec(Query)
 
         @DASplitDbl
         async def SProduct_Image(aDbl: TDbProductEx, _aMax: int, aIdx: int = 0, aLen: int = 0) -> TDbList:
@@ -357,7 +418,7 @@ class TSql(TSqlBase):
                     Data.append({'product_id': ProductId, 'image': xImage.split('/')[-1], 'src_url': xImage})
 
             Query = f'''
-                select id, product_id, image, src_url, src_size
+                select product_id, image, src_url, src_size
                 from ref_product_image
                 where (product_id in ({ListIntToComma(ProductIds)}))
             '''
@@ -390,12 +451,25 @@ class TSql(TSqlBase):
                         Value = f"({iData['product_id']}, '{iData['image']}', '{iData['src_url']}', {x['size']}, now())"
                         Values.append(Value)
 
+                # Query = f'''
+                #     insert into ref_product_image (product_id, image, src_url, src_size, src_date)
+                #     values {', '.join(Values)}
+                #     on conflict (product_id, image) do update
+                #     set enabled = true, src_size = excluded.src_size, src_date = excluded.src_date
+                #     returning id
+                # '''
                 Query = f'''
-                    insert into ref_product_image (product_id, image, src_url, src_size, src_date)
-                    values {', '.join(Values)}
-                    on conflict (product_id, image) do update
-                    set enabled = true, src_size = excluded.src_size, src_date = excluded.src_date
-                    returning (id)
+                    with src (product_id, image, src_url, src_size, src_date) as (
+                        values {', '.join(Values)}
+                    )
+                    merge into ref_product_image as dst
+                    using src
+                    on (dst.product_id = src.product_id) and (dst.image = src.image)
+                    when matched then
+                        update set enabled = true, src_size = src.src_size, src_date = src.src_date
+                    when not matched then
+                        insert (product_id, image, src_url, src_size, src_date)
+                        values (src.product_id, src.image, src.src_url, src.src_size, src.src_date)
                 '''
                 await TDbExecPool(self.Db.Pool).Exec(Query)
 
@@ -423,6 +497,7 @@ class TSql(TSqlBase):
                 CategoryIdt = IdtPairs.get(Rec.id, Rec.category_id)
                 Values.append(f'({self.ProductIdt[Rec.id]}, {self.CategoryIdt[CategoryIdt]})')
 
+            # no serial column
             Query = f'''
                 insert into ref_product_to_category (product_id, category_id)
                 values {', '.join(Values)}
@@ -431,29 +506,51 @@ class TSql(TSqlBase):
             return await TDbExecPool(self.Db.Pool).Exec(Query)
 
         @DASplitDbl
-        async def SProduct_Price(aDbl: TDbProductEx, _aMax: int, aIdx: int = 0, aLen: int = 0) -> TDbList:
+        async def SProduct_Price(aDbl: TDbProductEx, _aMax: int, aIdx: int = 0, aLen: int = 0):
             print('SProduct_Price()', aIdx, aLen)
 
-            Uniq = {}
+            ProductIds = []
+            for Rec in aDbl:
+                ProductIds.append(self.ProductIdt[Rec.id])
+            ProductsMargin = await self.GetProductsMargin(ProductIds)
+
             Values = []
             for Rec in aDbl:
-                Key = (self.ProductIdt[Rec.id], self.price_id)
-                if (Key not in Uniq):
-                    Uniq[Key] = ''
-                    Price = Rec.price if (self.CurrencyRate == 1) else int(float(Rec.price) / self.CurrencyRate)
-                    Value = f'({self.ProductIdt[Rec.id]}, {self.price_id}, {Price})'
+                ProductId = self.ProductIdt[Rec.id]
+                if (Rec.price_in):
+                    Price = Rec.price_in if (self.CurrencyRate == 1) else int(float(Rec.price_in) / self.CurrencyRate)
+                    Value = f'({ProductId}, {self.price_purchase_id}, {Price})'
+                    Values.append(Value)
+
+                    if (not Rec.price):
+                        Margin = ProductsMargin.get(ProductId, 1)
+                        Price = float(Rec.price_in * Margin) / self.CurrencyRate
+                        Price = RoundNear(Price, self.Conf.price_round)
+                        Value = f'({ProductId}, {self.price_sale_id}, {Price})'
+                        Values.append(Value)
+
+                if (Rec.price):
+                    Price = Rec.price if (self.CurrencyRate == 1) else int(float(Rec.price * Margin) / self.CurrencyRate)
+                    Value = f'({ProductId}, {self.price_sale_id}, {Price})'
                     Values.append(Value)
 
             Query = f'''
-                insert into ref_product_price (product_id, price_id, price)
-                values {', '.join(Values)}
-                on conflict (product_id, price_id, qty) do update
-                set price = excluded.price
+                with src (product_id, price_id, price) as (
+                    values {', '.join(Values)}
+                )
+                merge into ref_product_price as dst
+                using src
+                on (dst.product_id = src.product_id) and (dst.price_id = src.price_id) and (dst.qty = 1)
+                when matched and (manual is null or manual = false) then
+                    update set price = src.price
+                when not matched then
+                    insert (product_id, price_id, price)
+                    values (src.product_id, src.price_id, src.price)
             '''
-            return await TDbExecPool(self.Db.Pool).Exec(Query)
+            await TDbExecPool(self.Db.Pool).Exec(Query)
 
         @DASplitDbl
-        async def SProduct_Stock(aDbl: TDbProductEx, _aMax: int, aIdx: int = 0, aLen: int = 0) -> TDbList:
+        async def SProduct_Stock(aDbl: TDbProductEx, _aMax: int, aIdx: int = 0, aLen: int = 0):
             print('SProduct_Stock()', aIdx, aLen)
 
             Ids = []
@@ -472,7 +569,7 @@ class TSql(TSqlBase):
                         'doc_rest'
             	)
             '''
-            return await TDbExecPool(self.Db.Pool).Exec(Query)
+            await TDbExecPool(self.Db.Pool).Exec(Query)
 
         @DASplitDbl
         async def SProduct_Barcode(aDbl: TDbProductEx, _aMax: int, aIdx: int = 0, aLen: int = 0) -> TDbList:
@@ -490,7 +587,7 @@ class TSql(TSqlBase):
                     else:
                         Log.Print(1, 'i', f'SProduct_Barcode(). Not uniq code: {Rec.code}, id: {Rec.id}, name: {Rec.name}')
 
-
+            # no serial column
             Query = f'''
                 insert into ref_product_barcode (code, product_en, product_id, tenant_id)
                 values {', '.join(Values)}

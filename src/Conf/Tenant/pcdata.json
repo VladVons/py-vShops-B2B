@@ -15,12 +15,12 @@
                 "Out_Save_txt": {
                     "TDbProductEx": {
                         "len": 70,
-                        "fields": ["category_id", "code", "name", "available", "price"]
+                        "fields": ["category_id", "code", "name", "available", "price_in"]
                     }
                 },
                 "Out_Save_xlsx": {
                     "TDbProductEx": {
-                        "fields": ["category_id", "code", "name", "available", "price"]
+                        "fields": ["category_id", "code", "name", "available", "price_in"]
                     }
                 }
             },
@@ -37,7 +37,7 @@
                         "os": 8,
                         "dvd": 9,
                         "vga": 10,
-                        "price": 11
+                        "price_in": 11
                     },
                     "title": ["model", "case", "cpu", "ram", "disk", "vga", "os"],
                     "model": ["model", "case", "cpu"]
@@ -47,7 +47,7 @@
                     "fields": {
                         "model": 2,
                         "screen": 5,
-                        "price": 8,
+                        "price_in": 8,
                         "grade": 3,
                         "color": 7,
                         "stand": 4
@@ -59,7 +59,7 @@
                     "fields": {
                         "model": 2,
                         "screen": 3,
-                        "price": 6,
+                        "price_in": 6,
                         "grade": 4,
                         "color": 5
                     },

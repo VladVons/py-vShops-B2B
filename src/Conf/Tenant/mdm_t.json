@@ -10,13 +10,14 @@
                         "currency": "pln",
                         "auto_idt": true,
                         "product0": "model",
-                        "min_qty": 1
+                        "min_qty": 1,
+                        "price_round": 10
                     }
                 },
                 "Out_Save_txt": {
                     "TDbProductEx": {
                         "len": 70,
-                        "fields": ["category_id", "code", "name", "qty", "price"]
+                        "fields": ["category_id", "code", "name", "qty", "price_in"]
                     }
                 }
             },

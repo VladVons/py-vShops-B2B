@@ -62,7 +62,7 @@ class TProduct(TParser_txt):
                 'category_id': CategoryId,
                 'code': Model.lower(),
                 'name': Body,
-                'price': ToFloat(Price),
+                'price_in': ToFloat(Price),
                 'qty': int(Qty)
                 })
             self.Dbl.Rec.Flush()

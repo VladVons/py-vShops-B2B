@@ -6,7 +6,7 @@
     ],
     "plugins": [
         "Out_vShopClearProduct_db",
-        "Out_vShopClearProduct0_db",
+        "-Out_vShopClearProduct0_db",
         "Out_vShopClearMisc_db"
     ]
 }

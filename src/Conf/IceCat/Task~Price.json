@@ -2,7 +2,8 @@
     "dir_data": "./Data/IceCat",
     "comment": "IceCat",
     "plugins": [
-        "mdm"
+        "-mdm",
+        "pcdata"
     ],
     "common": {
         "sleep_loop": 0.01,
@@ -54,11 +55,27 @@
             "class": "Fake",
             "joins": {
                 "In_Crawl_icecat_xlsx": {
-                    "file": "mdm.xlsx"
+                    "file": "icecat-mdm.xlsx"
                 },
                 "Out_vShopTenantModel_db": {
                     "sql": {
                         "tenant": "mdm"
+                    }
+                }
+            },
+            "depends": [
+                "Out_vShopTenantModel_db"
+            ]
+        },
+        "pcdata": {
+            "class": "Fake",
+            "joins": {
+                "In_Crawl_icecat_xlsx": {
+                    "file": "icecat-pcdata.xlsx"
+                },
+                "Out_vShopTenantModel_db": {
+                    "sql": {
+                        "tenant": "pcdata"
                     }
                 }
             },

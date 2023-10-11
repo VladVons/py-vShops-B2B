@@ -25,6 +25,7 @@ class TDbProductEx(TDbList):
                 'category_id',
                 'code',
                 'price',
+                'price_in',
                 'qty',
                 'image',
                 'name',
@@ -32,7 +33,7 @@ class TDbProductEx(TDbList):
                 'features',
                 'descr',
                 'vendor'
-                  ]
+            ]
         )
 
 class TDbCategory(TDbList):
@@ -88,14 +89,16 @@ class TDbCompPricePl(TDbList):
 
 class TDbCrawl(TDbList):
     def __init__(self):
-        super().__init__([
-            'tenant',
-            'code',
-            'url',
-            'model',
-            'category',
-            'product',
-            'image',
-            'features',
-            'descr'
-        ])
+        super().__init__(
+            aFields = [
+                'tenant',
+                'code',
+                'url',
+                'model',
+                'category',
+                'product',
+                'image',
+                'features',
+                'descr'
+            ]
+        )

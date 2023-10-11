@@ -35,8 +35,8 @@ class TFiller():
         Title = '/'.join(Arr).replace('"', '')
         aRec.SetField('title', Title)
 
-        Val = ToFloat(aRow.get('price'))
-        aRec.SetField('price', Val)
+        Val = ToFloat(aRow.get('price_in'))
+        aRec.SetField('price_in', Val)
 
 
 class TPricePC(TParser_xlsx):
@@ -51,7 +51,7 @@ class TPricePC(TParser_xlsx):
         self.Filler = TFiller(self)
 
     def _Fill(self, aRow: dict):
-        if (not aRow.get('price')):
+        if (not aRow.get('price_in')):
             return
 
         Rec = self.Dbl.RecAdd()
@@ -84,7 +84,7 @@ class TPriceMonit(TParser_xlsx):
         self.Filler = TFiller(self)
 
     def _Filter(self, aRow: dict):
-        return (not aRow.get('price')) or (aRow.get('stand', '').lower() != 'yes')
+        return (not aRow.get('price_in')) or (aRow.get('stand', '').lower() != 'yes')
 
     def _Fill(self, aRow: dict):
         if (self._Filter(aRow)):
@@ -106,4 +106,4 @@ class TPriceMonit(TParser_xlsx):
 
 class TPriceMonitInd(TPriceMonit):
     def _Filter(self, aRow: dict):
-        return (not aRow.get('price'))
+        return (not aRow.get('price_in'))

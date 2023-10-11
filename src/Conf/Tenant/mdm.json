@@ -15,7 +15,7 @@
                 "Out_Save_txt": {
                     "TDbProductEx": {
                         "len": 70,
-                        "fields": ["category_id", "model", "name", "available", "price"]
+                        "fields": ["category_id", "model", "name", "available", "price_in"]
                     }
                 }
             },
@@ -31,7 +31,7 @@
                         "ram": 6,
                         "disk": 7,
                         "os": 8,
-                        "price": 10,
+                        "price_in": 10,
                         "grade": 11
                     },
                     "title": [["manufacture", "model"], "case", "cpu", "ram", "disk", "os", "grade"],
@@ -45,7 +45,7 @@
                         "screen": 4,
                         "manufacture": 5,
                         "model": 6,
-                        "price": 7,
+                        "price_in": 7,
                         "grade": 8
                     },
                     "title": [["manufacture", "model"], "screen", "grade"],
@@ -63,7 +63,7 @@
                         "disk": 7,
                         "os": 8,
                         "resolution": 9,
-                        "price": 11,
+                        "price_in": 11,
                         "grade": 12
                     },
                     "title": [["manufacture", "model"], "cpu", "ram", "disk", ["resolution", "screen"], "os", "grade"],

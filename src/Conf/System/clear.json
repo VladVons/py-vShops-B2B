@@ -38,8 +38,6 @@
                 "hist_page_view",
                 "hist_session"
             ]
-        },
-
-
+        }
     }
 }

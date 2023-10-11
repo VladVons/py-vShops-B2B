@@ -58,10 +58,18 @@ class TSql(TSqlBase):
         self.TenantId = 0
 
     async def _InitProduct0Category(self):
+        # Query = '''
+        #     insert into ref_product0_category (id)
+        #     values (0)
+        #     on conflict (id) do nothing
+        # '''
         Query = '''
             insert into ref_product0_category (id)
-            values (0)
-            on conflict (id) do nothing
+            select id
+            from (values (0)) src(id)
+            where not exists (
+                select 1 from ref_product0_category dst where (dst.id = src.id)
+            )
         '''
         await TDbExecPool(self.Db.Pool).Exec(Query)
 
@@ -140,11 +148,24 @@ class TSql(TSqlBase):
                 Url = 'null'
                 Info = 'null'
 
+            # Query = f'''
+            #     insert into ref_product0_crawl (code, product_en, url, update_date, info, crawl_site_id)
+            #     values ('{aCode}', '{self.Parser.CodeType}', {Url}, now(), {Info}, {self.ConfCrawl.Rec.id})
+            #     on conflict (code, product_en, crawl_site_id) do update
+            #     set update_date = now(), info = {Info}
+            # '''
             Query = f'''
-                insert into ref_product0_crawl (code, product_en, url, update_date, info, crawl_site_id)
-                values ('{aCode}', '{self.Parser.CodeType}', {Url}, now(), {Info}, {self.ConfCrawl.Rec.id})
-                on conflict (code, product_en, crawl_site_id) do update
-                set update_date = now(), info = {Info}
+                with src (code, product_en, url, update_date, info, crawl_site_id) as (
+                    values ('{aCode}', '{self.Parser.CodeType}', {Url}, now(), {Info}, {self.ConfCrawl.Rec.id})
+                )
+                merge into ref_product0_crawl as dst
+                using src
+                on (dst.code = src.code) and (dst.product_en = src.product_en) and (dst.crawl_site_id = src.crawl_site_id)
+                when matched then
+                    update set update_date = now(), info = src.info
+                when not matched then
+                    insert (code, product_en, url, update_date, info, crawl_site_id)
+                    values (src.code, src.product_en, src.url, src.update_date, src.info, src.crawl_site_id)
             '''
             await TDbExecPool(self.Db.Pool).Exec(Query)
 
@@ -235,6 +256,7 @@ class TSql(TSqlBase):
                         returning id
                     ),
                     wrpb as (
+                        -- no serial column
                         insert into ref_product0_barcode (product_id, code, product_en)
                         select
                             wrp.id,
@@ -244,6 +266,7 @@ class TSql(TSqlBase):
                         on conflict (code, product_en) do nothing
                     ),
                     wrpl as (
+                        -- no serial column
                         insert into ref_product0_lang (product_id, lang_id, title, features, descr)
                         select
                             wrp.id,
@@ -259,6 +282,7 @@ class TSql(TSqlBase):
                         where product_id = (select wrp.id from wrp)
                     ),
                     wrpi_2 as (
+                        -- no serial column
                         insert into ref_product0_image (product_id, enabled, image, src_url, src_size, src_date)
                         select
                             wrp.id,

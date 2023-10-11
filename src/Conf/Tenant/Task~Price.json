@@ -2,9 +2,7 @@
     "dir_data": "./Data/Tenant",
     "comment": "Export price lists",
     "include": [
-        "-1c.json",
         "pcdata.json",
-        "-mdm.json",
         "mdm_t.json"
     ],
     "plugins": [
@@ -18,14 +16,12 @@
     "plugin": {
         "Out_vShopTenant_db": {
             "sql": {
-                "parts": 100,
+                "parts": 10,
                 "lang": "ua"
             },
             "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
             "depends": [
-                "-In_comelit",
                 "-In_pcdata",
-                "-In_mdm",
                 "In_mdm_t"
             ],
             "img_loader": "{% file Conf/Task.SrvCtrl.Api.json:loader.img %}",
