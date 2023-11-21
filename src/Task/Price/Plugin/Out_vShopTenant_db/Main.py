@@ -524,8 +524,7 @@ class TSql(TSqlBase):
 
                     if (not Rec.price):
                         Margin = ProductsMargin.get(ProductId, 1)
-                        Price = float(Rec.price_in * Margin) / self.CurrencyRate
-                        Price = RoundNear(Price, self.Conf.price_round)
+                        Price = RoundNear(Price * Margin, self.Conf.price_round)
                         Value = f'({ProductId}, {self.price_sale_id}, {Price})'
                         Values.append(Value)
 

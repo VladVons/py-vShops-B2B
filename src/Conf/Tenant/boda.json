@@ -1,0 +1,68 @@
+{
+    "plugin": {
+        "In_boda": {
+            "class": "In_Price_boda_xlsx",
+            "file": "boda.xlsx",
+            "export": {
+                "Out_vShopTenant_db": {
+                    "sql": {
+                        "tenant": "boda",
+                        "currency": "uah",
+                        "auto_idt": true,
+                        "product0": "model"
+                    }
+                }
+            },
+            "url_gspread": "https://docs.google.com/spreadsheets/d/1K_hW8vnOeAV_c4gSAeqxU3pOQc9sGDqcMy36OlnB4hE",
+            "sheet": {
+                "COMPUTERS": {
+                    "skip": 1,
+                    "fields": {
+                        "model": 1,
+                        "cpu": 2,
+                        "case": 3,
+                        "disk": 5,
+                        "ram": 6,
+                        "os": 7,
+                        "dvd": 8,
+                        "vga": 9,
+                        "qty":10,
+                        "price_out": 11
+                    },
+                    "title": ["model", "case", "cpu", "ram", "disk", "vga", "os"],
+                    "model": ["model", "case", "cpu"]
+                },
+                "MONITORS": {
+                    "skip": 1,
+                    "fields": {
+                        "model": 1,
+                        "grade": 2,
+                        "stand": 3,
+                        "screen": 4,
+                        "color": 6,
+                        "qty": 7,
+                        "price_out": 8
+                    },
+                    "title": ["model", "screen", "grade", "color"]
+                },
+                "LAPTOPS": {
+                    "skip": 1,
+                    "fields": {
+                        "model": 1,
+                        "screen": 2,
+                        "cpu": 3,
+                        "battery": 4,
+                        "disk": 5,
+                        "ram": 6,
+                        "os": 7,
+                        "dvd": 8,
+                        "qty": 9,
+                        "price_out": 10
+                    },
+                    "title": ["model", "screen", "cpu", "ram", "disk"],
+                    "model": ["model", "cpu"]
+                }
+            }
+        }
+    }
+}

@@ -2,6 +2,7 @@
     "dir_data": "./Data/Tenant",
     "comment": "Export price lists",
     "include": [
+        "boda.json",
         "pcdata.json",
         "mdm_t.json"
     ],
@@ -21,8 +22,9 @@
             },
             "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
             "depends": [
+                "In_boda",
                 "-In_pcdata",
-                "In_mdm_t"
+                "-In_mdm_t"
             ],
             "img_loader": "{% file Conf/Task.SrvCtrl.Api.json:loader.img %}",
             "img_conf": "{% file Conf/Task.SrvImg.Api.json %}"

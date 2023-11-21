@@ -59,12 +59,14 @@ class TDbCompPC(TDbList):
                 'os',
                 'vga',
                 'dvd',
-                'price',
                 'grade',
-                'title'
+                'title',
+                'price',
+                'qty'
             ],
             aDef = {
-                'os': 'NoOS'
+                'os': 'NoOS',
+                'qty': 0
             }
         )
 
@@ -74,10 +76,11 @@ class TDbCompMonit(TDbList):
             aFields = [
                 'code',
                 'screen',
-                'price',
                 'grade',
                 'color',
-                'title'
+                'title',
+                'price',
+                'qty'
             ]
         )
 
