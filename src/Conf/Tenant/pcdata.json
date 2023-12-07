@@ -8,7 +8,8 @@
                     "sql": {
                         "tenant": "pcdata",
                         "currency": "eur",
-                        "auto_idt": true,
+                        "idt_auto": true,
+                        "price_auto": false,
                         "product0": "model"
                     }
                 },
@@ -47,9 +48,9 @@
                     "fields": {
                         "model": 2,
                         "screen": 5,
-                        "price_in": 8,
+                        "price_in": 10,
                         "grade": 3,
-                        "color": 7,
+                        "color": 9,
                         "stand": 4
                     },
                     "title": ["model", "screen", "grade", "color"]

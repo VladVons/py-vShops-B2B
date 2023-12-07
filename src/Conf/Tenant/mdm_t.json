@@ -8,7 +8,7 @@
                     "sql": {
                         "tenant": "mdm",
                         "currency": "pln",
-                        "auto_idt": true,
+                        "idt_auto": true,
                         "product0": "model",
                         "min_qty": 1,
                         "price_round": 10

@@ -25,10 +25,11 @@ class TSqlConf():
     tenant: str
     product0: str
     currency: str = ''
-    auto_idt: bool = False
+    idt_auto: bool = False
     parts: int = 100
     min_qty: int = 0
     price_round: int = 1
+    price_auto: bool = False
 
 class TCatalogToDb():
     def __init__(self, aDbl: TDbList):
@@ -102,14 +103,14 @@ class TSql(TSqlBase):
         return await self.ExecQuery(__package__, 'fmtGet_ModelUnknown.sql', {'aTenantId': self.tenant_id})
 
     async def GetProductsMargin(self, aProductIds: list[int]):
+        Res = {}
         ProductIds = ListIntToComma(aProductIds)
         Dbl = await self.ExecQuery(__package__, 'fmtGet_ProductMargin.sql', {'aProductIds': ProductIds})
-        Res = {}
         for Rec in Dbl:
-            Prev = 1
+            PrevMargin = 1
             for xMargin in Rec.margin:
-                Prev = xMargin if xMargin else Prev
-            Res[Rec.product_id] = Prev
+                PrevMargin = xMargin if xMargin else PrevMargin
+            Res[Rec.product_id] = PrevMargin
         return Res
 
     async def GetCurrencyRate(self):
@@ -262,7 +263,7 @@ class TSql(TSqlBase):
                     Rec.SetField('id', Idt)
 
             print('SProduct()', aIdx, aLen)
-            if (self.Conf.auto_idt):
+            if (self.Conf.idt_auto):
                 await SetAutoIdt()
 
             Uniq = {}
@@ -517,13 +518,13 @@ class TSql(TSqlBase):
             Values = []
             for Rec in aDbl:
                 ProductId = self.ProductIdt[Rec.id]
+                Margin = ProductsMargin.get(ProductId, 1)
                 if (Rec.price_in):
                     Price = Rec.price_in if (self.CurrencyRate == 1) else int(float(Rec.price_in) / self.CurrencyRate)
                     Value = f'({ProductId}, {self.price_purchase_id}, {Price})'
                     Values.append(Value)
 
-                    if (not Rec.price):
-                        Margin = ProductsMargin.get(ProductId, 1)
+                    if (self.Conf.price_auto) and (not Rec.price):
                         Price = RoundNear(Price * Margin, self.Conf.price_round)
                         Value = f'({ProductId}, {self.price_sale_id}, {Price})'
                         Values.append(Value)
@@ -533,20 +534,21 @@ class TSql(TSqlBase):
                     Value = f'({ProductId}, {self.price_sale_id}, {Price})'
                     Values.append(Value)
 
-            Query = f'''
-                with src (product_id, price_id, price) as (
-                    values {', '.join(Values)}
-                )
-                merge into ref_product_price as dst
-                using src
-                on (dst.product_id = src.product_id) and (dst.price_id = src.price_id) and (dst.qty = 1)
-                when matched and (manual is null or manual = false) then
-                    update set price = src.price
-                when not matched then
-                    insert (product_id, price_id, price)
-                    values (src.product_id, src.price_id, src.price)
-            '''
-            await TDbExecPool(self.Db.Pool).Exec(Query)
+            if (Values):
+                Query = f'''
+                    with src (product_id, price_id, price) as (
+                        values {', '.join(Values)}
+                    )
+                    merge into ref_product_price as dst
+                    using src
+                    on (dst.product_id = src.product_id) and (dst.price_id = src.price_id) and (dst.qty = 1)
+                    when matched and (manual is null or manual = false) then
+                        update set price = src.price
+                    when not matched then
+                        insert (product_id, price_id, price)
+                        values (src.product_id, src.price_id, src.price)
+                '''
+                await TDbExecPool(self.Db.Pool).Exec(Query)
 
         @DASplitDbl
         async def SProduct_Stock(aDbl: TDbProductEx, _aMax: int, aIdx: int = 0, aLen: int = 0):
@@ -600,6 +602,9 @@ class TSql(TSqlBase):
         await Product(aDbl)
         aDbl = GetUnique(aDbl)
 
+        Log.Print(1, 'i', 'Product_Price')
+        await SProduct_Price(aDbl, self.Conf.parts)
+
         Log.Print(1, 'i', 'Product_Stock')
         await SProduct_Stock(aDbl, self.Conf.parts)
 
@@ -615,9 +620,6 @@ class TSql(TSqlBase):
 
         Log.Print(1, 'i', 'Product_ToCategory')
         await SProduct_ToCategory(aDbl, self.Conf.parts)
-
-        Log.Print(1, 'i', 'Product_Price')
-        await SProduct_Price(aDbl, self.Conf.parts)
 
         Log.Print(1, 'i', 'Product_Image')
         await self.DisableTableByProduct('ref_product_image', 'and (src_url is not null)')

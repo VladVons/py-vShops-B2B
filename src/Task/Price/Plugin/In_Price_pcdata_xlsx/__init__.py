@@ -47,7 +47,7 @@ class TIn_Price_pcdata_xlsx(TPluginBase):
                     'category_id': aCategoryId,
                     'code': Rec.code,
                     'name': Rec.title,
-                    'price': Avg,
+                    'price_in': Avg,
                     'qty': Rec.count
                     })
 

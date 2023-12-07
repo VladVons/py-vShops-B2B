@@ -9,7 +9,7 @@ from Inc.DbList import TDbRec
 from Inc.Util.Str import ToFloat, ToHashWM
 from Inc.Util.Obj import GetNotNone
 from Inc.ParserX.Parser_xlsx import TParser_xlsx
-from ..CommonDb import TDbCompPC, TDbCompMonit
+from ..CommonDb import TDbCompPC, TDbCompMonit, GetTitleValues
 
 
 class TFiller():
@@ -27,16 +27,19 @@ class TFiller():
         for x in aFieldsCopy:
             self.Parent.Copy(x, aRow, aRec)
 
-        Arr = [str(aRow.get(x, '')) for x in self.ConfModel]
+        #Arr = [str(aRow.get(x, '')) for x in self.ConfModel]
+        Arr = GetTitleValues(aRow, self.ConfModel)
         Model = ToHashWM(' '.join(Arr))
         aRec.SetField('code', Model)
 
-        Arr = [str(aRow[x]).strip() for x in self.ConfTitle]
-        Title = '/'.join(Arr).replace('"', '')
+        #Arr = [str(aRow[x]).strip() for x in self.ConfTitle]
+        Arr = GetTitleValues(aRow, self.ConfTitle)
+        #Title = '/'.join(Arr).replace('"', '')
+        Title = ' '.join(Arr).replace('"', '')
         aRec.SetField('title', Title)
 
         Val = ToFloat(aRow.get('price_in'))
-        aRec.SetField('price_in', Val)
+        aRec.SetField('price', Val)
 
 
 class TPricePC(TParser_xlsx):

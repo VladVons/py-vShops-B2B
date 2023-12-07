@@ -8,7 +8,7 @@
                     "sql": {
                         "tenant": "boda",
                         "currency": "uah",
-                        "auto_idt": true,
+                        "idt_auto": true,
                         "product0": "model"
                     }
                 }

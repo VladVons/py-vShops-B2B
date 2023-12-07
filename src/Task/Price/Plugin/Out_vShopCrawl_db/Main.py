@@ -150,13 +150,13 @@ class TSql(TSqlBase):
 
             # Query = f'''
             #     insert into ref_product0_crawl (code, product_en, url, update_date, info, crawl_site_id)
-            #     values ('{aCode}', '{self.Parser.CodeType}', {Url}, now(), {Info}, {self.ConfCrawl.Rec.id})
+            #     values ('{aCode}', '{self.Parser.CodeType}', {Url }, now(), {Info}, {self.ConfCrawl.Rec.id})
             #     on conflict (code, product_en, crawl_site_id) do update
             #     set update_date = now(), info = {Info}
             # '''
             Query = f'''
                 with src (code, product_en, url, update_date, info, crawl_site_id) as (
-                    values ('{aCode}', '{self.Parser.CodeType}', {Url}, now(), {Info}, {self.ConfCrawl.Rec.id})
+                    values ('{aCode}', '{self.Parser.CodeType}'::product_enum, {Url}, now(), {Info}::json, {self.ConfCrawl.Rec.id})
                 )
                 merge into ref_product0_crawl as dst
                 using src

@@ -4,6 +4,7 @@
 
 
 from Inc.DbList import TDbList
+from Inc.Util.Obj import GetNotNone
 
 
 def GetTitle(aRow: dict, aKeys: list, aDelim) -> str:
@@ -15,6 +16,14 @@ def GetTitle(aRow: dict, aKeys: list, aDelim) -> str:
             Val = str(aRow.get(Key, ''))
         Res.append(Val)
     return aDelim.join(Res)
+
+def GetTitleValues(aData: dict, aFields: list[str]) -> list:
+    Res = []
+    for x in aFields:
+        Val = str(GetNotNone(aData, x, ''))
+        if (Val):
+            Res.append(Val)
+    return Res
 
 
 class TDbProductEx(TDbList):

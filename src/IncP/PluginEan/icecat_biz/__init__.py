@@ -11,7 +11,7 @@ from .. import TParserBase
 
 class TParser(TParserBase):
     CodeType = 'icecat'
-    Moderate = 2
+    Moderate = 1
     UrlRoot = 'https://icecat.biz'
     SkipFeatures = {
         'пк/робочі станції': ["Пам'ять", 'Носії зберігання даних']

@@ -8,7 +8,7 @@
                     "sql": {
                         "tenant": "mdm",
                         "currency": "eur",
-                        "auto_idt": true,
+                        "idt_auto": true,
                         "product0": "model"
                     }
                 },
