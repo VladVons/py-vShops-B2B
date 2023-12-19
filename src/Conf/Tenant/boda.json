@@ -61,6 +61,17 @@
                     },
                     "title": ["model", "screen", "cpu", "ram", "disk"],
                     "model": ["model", "cpu"]
+                },
+                "PRINTERS": {
+                    "skip": 1,
+                    "fields": {
+                        "model": 1,
+                        "pages": 2, 
+                        "qty": 5,
+                        "price_out": 6
+                    },
+                    "title": ["model"],
+                    "model": ["model"]
                 }
             }
         }

@@ -9,7 +9,7 @@ from Inc.DbList import TDbRec
 from Inc.Util.Str import ToFloat, ToHashWM
 from Inc.Util.Obj import GetNotNone
 from Inc.ParserX.Parser_xlsx import TParser_xlsx
-from ..CommonDb import TDbCompPC, TDbCompMonit
+from ..CommonDb import TDbCompPC, TDbCompMonit, TDbPrinter
 
 
 class TFiller():
@@ -107,3 +107,20 @@ class TPriceMonit(TParser_xlsx):
 class TPriceLaptop(TPricePC):
     def _Filter(self, aRow: dict):
         return (not aRow.get('price_out'))
+
+
+class TPricePrinter(TParser_xlsx):
+    def __init__(self, aParent):
+        super().__init__(aParent, TDbPrinter())
+        self.Filler: TFiller
+
+    def _OnLoad(self):
+        self.Filler = TFiller(self)
+
+    def _Fill(self, aRow: dict):
+        if (not aRow.get('price_out')):
+            return
+
+        Rec = self.Dbl.RecAdd()
+        self.Filler.SetBase(aRow, Rec, ['qty'])
+        Rec.Flush()

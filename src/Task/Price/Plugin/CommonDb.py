@@ -93,6 +93,18 @@ class TDbCompMonit(TDbList):
             ]
         )
 
+class TDbPrinter(TDbList):
+    def __init__(self):
+        super().__init__(
+            aFields = [
+                'code',
+                'pages',
+                'title',
+                'price',
+                'qty'
+            ]
+        )
+
 class TDbCompPricePl(TDbList):
     def __init__(self):
         super().__init__([

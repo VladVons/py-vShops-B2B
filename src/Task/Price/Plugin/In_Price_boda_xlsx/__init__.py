@@ -10,7 +10,7 @@ import gspread
 #
 from Inc.ParserX.Common import TPluginBase
 from IncP.Log import Log
-from .Price import TPricePC, TPriceLaptop, TPriceMonit
+from .Price import TPricePC, TPriceLaptop, TPriceMonit, TPricePrinter
 from ..CommonDb import TDbCategory, TDbProductEx
 
 
@@ -52,6 +52,9 @@ class TIn_Price_boda_xlsx(TPluginBase):
             },
             'LAPTOPS': {
                 'parser': TPriceLaptop, 'category_id': 3, 'category': 'Ноутбук'
+            },
+            'PRINTERS': {
+                'parser': TPricePrinter, 'category_id': 4, 'category': 'Принтер'
             }
         }
 
