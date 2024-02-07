@@ -29,43 +29,61 @@
             "sheet": {
                 "COMPUTERS": {
                     "skip": 1,
+                    "header": 1,
                     "fields": {
-                        "model": 2,
-                        "cpu": 3,
-                        "case": 4,
-                        "disk": 6,
-                        "ram": 7,
-                        "os": 8,
-                        "dvd": 9,
-                        "vga": 10,
-                        "price_in": 11
+                        "model": "Model",
+                        "cpu": "CPU",
+                        "case": "Case type",
+                        "disk": "HDD",
+                        "ram": "RAM",
+                        "os": "License",
+                        "dvd": "Optical drive",
+                        "vga": "GPU",
+                        "price_in": "EX. PRICE",
+                        "price": "Price UA"
                     },
                     "title": ["model", "case", "cpu", "ram", "disk", "vga", "os"],
                     "model": ["model", "case", "cpu"]
                 },
                 "MONITORS": {
                     "skip": 1,
+                    "header": 1,
                     "fields": {
-                        "model": 2,
-                        "screen": 5,
-                        "price_in": 10,
-                        "grade": 3,
-                        "color": 9,
-                        "stand": 4
+                        "model": "Model",
+                        "screen": "Size",
+                        "grade": "Screen Grade",
+                        "color": "Frame color",
+                        "stand": "Stand",
+                        "price_in": "EX. PRICE",
+                        "price": "Price UA"
                     },
                     "title": ["model", "screen", "grade", "color"]
                 },
                 "INDUSTRIAL MONITORS": {
                     "skip": 1,
+                    "header": 1,
                     "fields": {
-                        "model": 2,
-                        "screen": 3,
-                        "price_in": 6,
-                        "grade": 4,
-                        "color": 5
+                        "model": "Model",
+                        "screen": "Inches",
+                        "grade": "Screen Grade",
+                        "color": "Frame color",
+                        "price_in": "EX. PRICE",
+                        "price": "Price UA"
                     },
                     "title": ["model", "screen", "grade", "color"]
+                },
+                "PRINTERS": {
+                    "skip": 1,
+                    "header": 1,
+                    "fields": {
+                        "model": "Model",
+                        "pages": "Page counter",
+                        "price_in": "EX. PRICE",
+                        "price": "Price UA"
+                    },
+                    "title": ["model"]
                 }
+ 
             }
         }
     }

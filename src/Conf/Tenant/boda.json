@@ -13,62 +13,66 @@
                     }
                 }
             },
-            "url_gspread": "https://docs.google.com/spreadsheets/d/1K_hW8vnOeAV_c4gSAeqxU3pOQc9sGDqcMy36OlnB4hE",
+            "url_gspread": "https://docs.google.com/spreadsheets/d/1INnMJeNY5v0pz3ycp-Jw2RKd0BwWNJDsLfqGcPcuytk",
             "sheet": {
                 "COMPUTERS": {
                     "skip": 1,
+                    "header": 1,
                     "fields": {
-                        "model": 1,
-                        "cpu": 2,
-                        "case": 3,
-                        "disk": 5,
-                        "ram": 6,
-                        "os": 7,
-                        "dvd": 8,
-                        "vga": 9,
-                        "qty":10,
-                        "price_out": 11
+                        "model": "Model",
+                        "cpu": "CPU",
+                        "case": "Case type",
+                        "disk": "HDD",
+                        "ram": "RAM",
+                        "os": "License",
+                        "dvd": "DVD",
+                        "vga": "GPU",
+                        "qty":"Quantity",
+                        "price": "Price UA"
                     },
                     "title": ["model", "case", "cpu", "ram", "disk", "vga", "os"],
                     "model": ["model", "case", "cpu"]
                 },
                 "MONITORS": {
                     "skip": 1,
+                    "header": 1,
                     "fields": {
-                        "model": 1,
-                        "grade": 2,
-                        "stand": 3,
-                        "screen": 4,
-                        "color": 6,
-                        "qty": 7,
-                        "price_out": 8
+                        "model": "Model",
+                        "grade": "Grade",
+                        "stand": "Stand",
+                        "screen": "Size",
+                        "color": "Color",
+                        "qty": "Quantity",
+                        "price": "Price UA"
                     },
                     "title": ["model", "screen", "grade", "color"]
                 },
                 "LAPTOPS": {
                     "skip": 1,
+                    "header": 1,
                     "fields": {
-                        "model": 1,
-                        "screen": 2,
-                        "cpu": 3,
-                        "battery": 4,
-                        "disk": 5,
-                        "ram": 6,
-                        "os": 7,
-                        "dvd": 8,
-                        "qty": 9,
-                        "price_out": 10
+                        "model": "Model",
+                        "screen": "Size",
+                        "cpu": "CPU",
+                        "battery": "Battery",
+                        "disk": "HDD",
+                        "ram": "RAM",
+                        "os": "License",
+                        "dvd": "DVD",
+                        "qty": "Quantity",
+                        "price": "Price UA"
                     },
                     "title": ["model", "screen", "cpu", "ram", "disk"],
                     "model": ["model", "cpu"]
                 },
                 "PRINTERS": {
                     "skip": 1,
+                    "header": 1,
                     "fields": {
-                        "model": 1,
-                        "pages": 2, 
-                        "qty": 5,
-                        "price_out": 6
+                        "model": "Model",
+                        "pages": "Page counter", 
+                        "qty": "Quantity",
+                        "price": "Price UA"
                     },
                     "title": ["model"],
                     "model": ["model"]

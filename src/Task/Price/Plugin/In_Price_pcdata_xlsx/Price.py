@@ -9,7 +9,7 @@ from Inc.DbList import TDbRec
 from Inc.Util.Str import ToFloat, ToHashWM
 from Inc.Util.Obj import GetNotNone
 from Inc.ParserX.Parser_xlsx import TParser_xlsx
-from ..CommonDb import TDbCompPC, TDbCompMonit, GetTitleValues
+from ..CommonDb import TDbCompPC, TDbCompMonit, TDbPrinter, GetTitleValues
 
 
 class TFiller():
@@ -38,8 +38,9 @@ class TFiller():
         Title = ' '.join(Arr).replace('"', '')
         aRec.SetField('title', Title)
 
-        Val = ToFloat(aRow.get('price_in'))
-        aRec.SetField('price', Val)
+        for x in ['price', 'price_in']:
+            Val = ToFloat(aRow.get(x))
+            aRec.SetField(x, Val)
 
 
 class TPricePC(TParser_xlsx):
@@ -110,3 +111,20 @@ class TPriceMonit(TParser_xlsx):
 class TPriceMonitInd(TPriceMonit):
     def _Filter(self, aRow: dict):
         return (not aRow.get('price_in'))
+
+
+class TPricePrinter(TParser_xlsx):
+    def __init__(self, aParent):
+        super().__init__(aParent, TDbPrinter())
+        self.Filler: TFiller
+
+    def _OnLoad(self):
+        self.Filler = TFiller(self)
+
+    def _Fill(self, aRow: dict):
+        if (not aRow.get('price_in')):
+            return
+
+        Rec = self.Dbl.RecAdd()
+        self.Filler.SetBase(aRow, Rec, ['qty'])
+        Rec.Flush()

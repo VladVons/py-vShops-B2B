@@ -33,6 +33,7 @@ class TIn_Price_boda_xlsx(TPluginBase):
                 'code': Rec.code,
                 'name': Rec.title,
                 'price': Rec.price,
+                'price_in': Rec.price_in,
                 'qty': Rec.qty
             })
 
@@ -45,7 +46,7 @@ class TIn_Price_boda_xlsx(TPluginBase):
 
         XTable = {
             'COMPUTERS': {
-                'parser': TPricePC, 'category_id': 1, 'category': 'Компютер', 'enabled': True
+                'parser': TPricePC, 'category_id': 1, 'category': "Комп'ютер", 'enabled': True
             },
             'MONITORS': {
                 'parser': TPriceMonit,'category_id': 2, 'category': 'Монітор'

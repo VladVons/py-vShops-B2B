@@ -4,6 +4,7 @@
 #
 # https://pc-data.com.pl
 # https://docs.google.com/spreadsheets/d/1EIwjTitfj1_oyWS7ralnUCtq8ZH0g3DWBKq3gP4qrvo/edit
+# https://docs.google.com/spreadsheets/d/1c4HxmK5XUi0FzwdzFleFAVL02-UTRdIvEpaPwwV2yKo/edit (boda)
 
 
 import os
@@ -11,7 +12,7 @@ import gspread
 #
 from Inc.ParserX.Common import TPluginBase
 from IncP.Log import Log
-from .Price import TPricePC, TPriceMonit, TPriceMonitInd
+from .Price import TPricePC, TPriceMonit, TPriceMonitInd, TPricePrinter
 from ..CommonDb import TDbCategory, TDbProductEx
 
 
@@ -29,25 +30,28 @@ class TIn_Price_pcdata_xlsx(TPluginBase):
 
     def ToDbProductEx(self, aParser, aDbProductEx: TDbProductEx, aCategoryId):
         Uniq = {}
-        FieldAvg = 'price'
+        Price = 'price'
+        PriceIn = 'price_in'
         Fields =  aParser.Dbl.GetFields()
-        Fields.remove(FieldAvg)
-        Dbl = aParser.Dbl.Group(Fields, [FieldAvg])
+        Fields.remove(Price)
+        Dbl = aParser.Dbl.Group(Fields, [Price, PriceIn])
         for Rec in Dbl:
             Title = Rec.title
             if (Title in Uniq):
                 Log.Print(1, 'i', f'Not unique title: {Title}')
             else:
                 Uniq[Title] = ''
-                Avg = round(Rec.GetField(FieldAvg) / Rec.count, 1)
-                Rec.SetField(FieldAvg, Avg)
-                Rec.Flush()
+                PriceAvg = round(Rec.GetField(Price) / Rec.count, 1)
+                Rec.SetField(Price, PriceAvg)
+                PriceInAvg = round(Rec.GetField(PriceIn) / Rec.count, 1)
+                Rec.SetField(PriceIn, PriceInAvg)
 
                 aDbProductEx.RecAdd().SetAsDict({
                     'category_id': aCategoryId,
                     'code': Rec.code,
                     'name': Rec.title,
-                    'price_in': Avg,
+                    'price': PriceAvg,
+                    'price_in': PriceInAvg,
                     'qty': Rec.count
                     })
 
@@ -60,14 +64,18 @@ class TIn_Price_pcdata_xlsx(TPluginBase):
 
         XTable = {
             'COMPUTERS': {
-                'parser': TPricePC, 'category_id': 1, 'category': 'Компютер'
+                'parser': TPricePC, 'category_id': 1, 'category': "Комп'ютер"
             },
             'MONITORS': {
                 'parser': TPriceMonit,'category_id': 2, 'category': 'Монітор'
             },
             'INDUSTRIAL MONITORS': {
                 'parser': TPriceMonitInd, 'category_id': 3, 'category': 'Монітор індустрійний'
+            },
+            'PRINTERS': {
+                'parser': TPricePrinter, 'category_id': 4, 'category': 'Принтер'
             }
+
         }
 
         DbProductEx = TDbProductEx()

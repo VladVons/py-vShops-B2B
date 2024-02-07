@@ -71,6 +71,7 @@ class TDbCompPC(TDbList):
                 'grade',
                 'title',
                 'price',
+                'price_in',
                 'qty'
             ],
             aDef = {
@@ -89,6 +90,7 @@ class TDbCompMonit(TDbList):
                 'color',
                 'title',
                 'price',
+                'price_in',
                 'qty'
             ]
         )
@@ -101,6 +103,7 @@ class TDbPrinter(TDbList):
                 'pages',
                 'title',
                 'price',
+                'price_in',
                 'qty'
             ]
         )

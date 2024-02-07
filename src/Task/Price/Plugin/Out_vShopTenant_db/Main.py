@@ -327,7 +327,6 @@ class TSql(TSqlBase):
                         (rpp.tenant_id = {self.tenant_id}) and (rpp.product_en = 'model') and (rpp.code = rp.model)
                     where
                         (rp.enabled) and
-                        (rp.product0_skip is null) and
                         (rp.model is not null) and
                         (rp.tenant_id = {self.tenant_id}) and
                         (rp.model in ({ListToComma(Codes)})) and
