@@ -25,7 +25,7 @@
                     }
                 }
             },
-            "url_gspread": "https://docs.google.com/spreadsheets/d/1EIwjTitfj1_oyWS7ralnUCtq8ZH0g3DWBKq3gP4qrvo",
+            "url_gspread": "https://docs.google.com/spreadsheets/d/xxxxxxxxxx",
             "sheet": {
                 "COMPUTERS": {
                     "skip": 1,
@@ -39,8 +39,8 @@
                         "os": "License",
                         "dvd": "Optical drive",
                         "vga": "GPU",
-                        "price_in": "EX. PRICE",
-                        "price": "Price UA"
+                        "price_in": "PriceIn",
+                        "price": "Price"
                     },
                     "title": ["model", "case", "cpu", "ram", "disk", "vga", "os"],
                     "model": ["model", "case", "cpu"]
@@ -54,8 +54,8 @@
                         "grade": "Screen Grade",
                         "color": "Frame color",
                         "stand": "Stand",
-                        "price_in": "EX. PRICE",
-                        "price": "Price UA"
+                        "price_in": "PriceIn",
+                        "price": "Price"
                     },
                     "title": ["model", "screen", "grade", "color"]
                 },
@@ -67,8 +67,8 @@
                         "screen": "Inches",
                         "grade": "Screen Grade",
                         "color": "Frame color",
-                        "price_in": "EX. PRICE",
-                        "price": "Price UA"
+                        "price_in": "PriceIn",
+                        "price": "Price"
                     },
                     "title": ["model", "screen", "grade", "color"]
                 },
@@ -78,8 +78,8 @@
                     "fields": {
                         "model": "Model",
                         "pages": "Page counter",
-                        "price_in": "EX. PRICE",
-                        "price": "Price UA"
+                        "price_in": "PriceIn",
+                        "price": "Price"
                     },
                     "title": ["model"]
                 }

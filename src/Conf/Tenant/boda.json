@@ -28,7 +28,7 @@
                         "dvd": "DVD",
                         "vga": "GPU",
                         "qty":"Quantity",
-                        "price": "Price UA"
+                        "price": "Price"
                     },
                     "title": ["model", "case", "cpu", "ram", "disk", "vga", "os"],
                     "model": ["model", "case", "cpu"]
@@ -43,7 +43,7 @@
                         "screen": "Size",
                         "color": "Color",
                         "qty": "Quantity",
-                        "price": "Price UA"
+                        "price": "Price"
                     },
                     "title": ["model", "screen", "grade", "color"]
                 },
@@ -60,7 +60,7 @@
                         "os": "License",
                         "dvd": "DVD",
                         "qty": "Quantity",
-                        "price": "Price UA"
+                        "price": "Price"
                     },
                     "title": ["model", "screen", "cpu", "ram", "disk"],
                     "model": ["model", "cpu"]
@@ -72,7 +72,7 @@
                         "model": "Model",
                         "pages": "Page counter", 
                         "qty": "Quantity",
-                        "price": "Price UA"
+                        "price": "Price"
                     },
                     "title": ["model"],
                     "model": ["model"]

@@ -64,7 +64,7 @@ class TIn_Price_pcdata_xlsx(TPluginBase):
 
         XTable = {
             'COMPUTERS': {
-                'parser': TPricePC, 'category_id': 1, 'category': "Комп'ютер"
+                'parser': TPricePC, 'category_id': 1, 'category': "Комп'ютер", "enabled": True
             },
             'MONITORS': {
                 'parser': TPriceMonit,'category_id': 2, 'category': 'Монітор'
@@ -83,15 +83,16 @@ class TIn_Price_pcdata_xlsx(TPluginBase):
         Engine = None
         Cached = False
         for xKey, xVal in XTable.items():
-            Parser = xVal['parser'](self)
-            if (Engine):
-                Parser.InitEngine(Engine)
-            else:
-                Engine = Parser.InitEngine()
-            Parser.SetSheet(xKey)
-            await Parser.Load()
-            Cached |= Parser.Cached
-            self.ToDbProductEx(Parser, DbProductEx, xVal['category_id'])
-            DbCategory.RecAdd().SetAsDict({'id': xVal['category_id'], 'parent_id': 0, 'name': xVal['category']})
+            if (xVal.get('enabled', True)):
+                Parser = xVal['parser'](self)
+                if (Engine):
+                    Parser.InitEngine(Engine)
+                else:
+                    Engine = Parser.InitEngine()
+                Parser.SetSheet(xKey)
+                await Parser.Load()
+                Cached |= Parser.Cached
+                self.ToDbProductEx(Parser, DbProductEx, xVal['category_id'])
+                DbCategory.RecAdd().SetAsDict({'id': xVal['category_id'], 'parent_id': 0, 'name': xVal['category']})
 
         return {'cached': Cached, 'TDbCategory': DbCategory, 'TDbProductEx': DbProductEx}
