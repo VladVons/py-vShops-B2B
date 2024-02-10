@@ -7,7 +7,7 @@
                 "Out_vShopTenant_db": {
                     "sql": {
                         "tenant": "pcdata",
-                        "currency": "eur",
+                        "currency": "uah",
                         "idt_auto": true,
                         "price_auto": false,
                         "product0": "model"

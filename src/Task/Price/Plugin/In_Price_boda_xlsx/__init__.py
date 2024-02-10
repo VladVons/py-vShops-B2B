@@ -64,7 +64,7 @@ class TIn_Price_boda_xlsx(TPluginBase):
         Engine = None
         Cached = False
         for xKey, xVal in XTable.items():
-            if (xVal.get('enabled', True)):
+            if (xVal.get('enabled', True)) and (xKey in self.Conf['sheet']):
                 Parser = xVal['parser'](self)
                 if (Engine):
                     Parser.InitEngine(Engine)
