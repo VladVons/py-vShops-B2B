@@ -27,11 +27,11 @@ class TFiller():
         for x in aFieldsCopy:
             self.Parent.Copy(x, aRow, aRec)
 
-        Arr = [str(aRow.get(x, '')) for x in self.ConfModel]
+        Arr = [str(aRow.get(x, '')) for x in self.ConfModel if aRow[x]]
         Model = ToHashWM(' '.join(Arr))
         aRec.SetField('code', Model)
 
-        Arr = [str(aRow[x]).strip() for x in self.ConfTitle]
+        Arr = [str(aRow[x]).strip() for x in self.ConfTitle if aRow[x]]
         Title = '/'.join(Arr).replace('"', '')
         aRec.SetField('title', Title)
 

@@ -23,10 +23,10 @@
             },
             "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
             "depends": [
-                "-In_boda",
+                "In_boda",
                 "-In_pcdata",
                 "-In_mdm_t",
-                "In_mdm_x"
+                "-In_mdm_x"
             ],
             "img_loader": "{% file Conf/Task.SrvCtrl.Api.json:loader.img %}",
             "img_conf": "{% file Conf/Task.SrvImg.Api.json %}"

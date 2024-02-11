@@ -28,6 +28,7 @@
                         "dvd": "DVD",
                         "vga": "GPU",
                         "qty":"Quantity",
+                        "price_in": "PriceIn",
                         "price": "Price"
                     },
                     "title": ["model", "case", "cpu", "ram", "disk", "vga", "os"],
@@ -43,6 +44,7 @@
                         "screen": "Size",
                         "color": "Color",
                         "qty": "Quantity",
+                        "price_in": "PriceIn",
                         "price": "Price"
                     },
                     "title": ["model", "screen", "grade", "color"]
@@ -54,15 +56,16 @@
                         "model": "Model",
                         "screen": "Size",
                         "cpu": "CPU",
-                        "battery": "Battery",
                         "disk": "HDD",
                         "ram": "RAM",
                         "os": "License",
-                        "dvd": "DVD",
-                        "qty": "Quantity",
+                        "matrix": "Matrix",
+                        "touch": "Touch",
+                          "qty": "Quantity",
+                        "price_in": "PriceIn",
                         "price": "Price"
                     },
-                    "title": ["model", "screen", "cpu", "ram", "disk"],
+                    "title": ["model", "screen", "cpu", "ram", "disk", "matrix", "touch", "os"],
                     "model": ["model", "cpu"]
                 },
                 "PRINTERS": {
@@ -72,6 +75,7 @@
                         "model": "Model",
                         "pages": "Page counter", 
                         "qty": "Quantity",
+                        "price_in": "PriceIn",
                         "price": "Price"
                     },
                     "title": ["model"],

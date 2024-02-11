@@ -13,6 +13,7 @@
                     }
                 }
             },
+            "url_gspread": "https://docs.google.com/spreadsheets/d/1Hc0olzpJdsOKrR_4ictPY5QLw0vxU0fO/edit#gid=279704161",
             "sheet": {
                 "COMPUTERS": {
                     "skip": 1,
@@ -48,7 +49,7 @@
                         "price_in": "PriceIn",
                         "price": "Price"
                     },
-                    "title": ["model", "screen", "cpu", "ram", "disk", "matrix", "touch", "vga", "os"],
+                    "title": ["model", "screen", "cpu", "ram", "disk", "matrix", "touch", "os"],
                     "model": ["model", "cpu"]
                 }
             }
