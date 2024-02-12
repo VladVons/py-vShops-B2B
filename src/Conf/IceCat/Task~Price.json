@@ -2,9 +2,9 @@
     "dir_data": "./Data/IceCat",
     "comment": "IceCat",
     "plugins": [
-        "-mdm",
+        "mdm",
         "-pcdata",
-        "boda"
+        "-boda"
     ],
     "common": {
         "sleep_loop": 0.01,
