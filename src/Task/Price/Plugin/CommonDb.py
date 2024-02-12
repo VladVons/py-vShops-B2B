@@ -41,7 +41,8 @@ class TDbProductEx(TDbList):
                 'summary',
                 'features',
                 'descr',
-                'vendor'
+                'vendor',
+                'used'
             ]
         )
 
@@ -72,7 +73,8 @@ class TDbCompPC(TDbList):
                 'title',
                 'price',
                 'price_in',
-                'qty'
+                'qty',
+                'used'
             ],
             aDef = {
                 'os': 'NoOS',
@@ -91,7 +93,8 @@ class TDbCompMonit(TDbList):
                 'title',
                 'price',
                 'price_in',
-                'qty'
+                'qty',
+                'used'
             ]
         )
 
@@ -104,7 +107,8 @@ class TDbPrinter(TDbList):
                 'title',
                 'price',
                 'price_in',
-                'qty'
+                'qty',
+                'used'
             ]
         )
 

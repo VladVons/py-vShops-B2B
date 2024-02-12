@@ -15,7 +15,6 @@ from ..CommonDb import TDbCompPC, TDbCompMonit, TDbPrinter
 class TFiller():
     def __init__(self, aParent):
         self.Parent = aParent
-
         Conf = aParent.GetConfSheet()
         self.ConfTitle = Conf.get('title', [])
         self.ConfModel = Conf.get('model', ['model'])
@@ -23,6 +22,7 @@ class TFiller():
     def SetBase(self, aRow: dict, aRec: TDbRec, aFieldsCopy: list):
         Val = aRow.get('model').upper()
         aRow['model'] = Val
+        aRow['used'] = self.Parent.Parent.Conf.get('used', False)
 
         for x in aFieldsCopy:
             self.Parent.Copy(x, aRow, aRec)

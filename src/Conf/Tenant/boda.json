@@ -14,6 +14,7 @@
                 }
             },
             "url_gspread": "https://docs.google.com/spreadsheets/d/1INnMJeNY5v0pz3ycp-Jw2RKd0BwWNJDsLfqGcPcuytk",
+            "used": true,
             "sheet": {
                 "COMPUTERS": {
                     "skip": 1,

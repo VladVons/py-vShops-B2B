@@ -23,6 +23,7 @@ class TFiller():
     def SetBase(self, aRow: dict, aRec: TDbRec, aFieldsCopy: list):
         Val = aRow.get('model').upper()
         aRow['model'] = Val
+        aRow['used'] = self.Parent.Parent.Conf.get('used', False)
 
         for x in aFieldsCopy:
             self.Parent.Copy(x, aRow, aRec)

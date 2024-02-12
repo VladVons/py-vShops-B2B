@@ -276,7 +276,7 @@ class TSql(TSqlBase):
                     Uniq[Key] = ''
                     Idts.append(Idt)
 
-                    Value = f"({Idt}, {self.tenant_id}, ({Rec.qty} > 0), '{Rec.code}')"
+                    Value = f"({Idt}, {self.tenant_id}, ({Rec.qty} > 0), {bool(Rec.used)}, '{Rec.code}')"
                     Values.append(Value)
 
             if (Values):
@@ -288,17 +288,17 @@ class TSql(TSqlBase):
                 #     returning id, idt
                 # '''
                 Query = f'''
-                    with src (idt, tenant_id, enabled, model) as (
+                    with src (idt, tenant_id, enabled, used, model) as (
                         values {', '.join(Values)}
                     )
                     merge into ref_product as dst
                     using src
                     on (dst.idt = src.idt) and (dst.tenant_id = src.tenant_id)
                     when matched then
-                        update set enabled = src.enabled, model = src.model
+                        update set enabled = src.enabled, used = src.used, model = src.model
                     when not matched then
-                        insert (idt, tenant_id, enabled, model)
-                        values (src.idt, src.tenant_id, src.enabled, src.model)
+                        insert (idt, tenant_id, enabled, used, model)
+                        values (src.idt, src.tenant_id, src.enabled, src.used, src.model)
                 '''
                 await TDbExecPool(self.Db.Pool).Exec(Query)
 

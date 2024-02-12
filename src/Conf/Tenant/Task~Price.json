@@ -25,7 +25,6 @@
             "depends": [
                 "-In_boda",
                 "-In_pcdata",
-                "-In_mdm_t",
                 "In_mdm_x"
             ],
             "img_loader": "{% file Conf/Task.SrvCtrl.Api.json:loader.img %}",
