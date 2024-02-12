@@ -34,7 +34,8 @@ class TIn_Price_boda_xlsx(TPluginBase):
                 'name': Rec.title,
                 'price': Rec.price,
                 'price_in': Rec.price_in,
-                'qty': Rec.qty
+                'qty': Rec.qty,
+                'used': Rec.used
             })
 
     async def Run(self):

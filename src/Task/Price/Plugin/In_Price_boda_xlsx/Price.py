@@ -22,7 +22,9 @@ class TFiller():
     def SetBase(self, aRow: dict, aRec: TDbRec, aFieldsCopy: list):
         Val = aRow.get('model').upper()
         aRow['model'] = Val
-        aRow['used'] = self.Parent.Parent.Conf.get('used', False)
+
+        Val = self.Parent.Parent.Conf.get('used', False)
+        aRec.SetField('used', Val)
 
         for x in aFieldsCopy:
             self.Parent.Copy(x, aRow, aRec)

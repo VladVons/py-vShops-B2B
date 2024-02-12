@@ -52,7 +52,8 @@ class TIn_Price_pcdata_xlsx(TPluginBase):
                     'name': Rec.title,
                     'price': PriceAvg,
                     'price_in': PriceInAvg,
-                    'qty': Rec.count
+                    'qty': Rec.count,
+                    'used': Rec.used
                     })
 
     async def Run(self):
