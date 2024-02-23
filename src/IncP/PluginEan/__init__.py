@@ -44,7 +44,7 @@ class TParserBase():
         elif (isinstance(aData, bytes)) and (aMod != 'wb'):
             aData = aData.decode('utf-8')
 
-        with open(aFile, aMod) as F:
+        with open(aFile, aMod, encoding = 'utf8') as F:
             F.write(aData)
 
     @staticmethod

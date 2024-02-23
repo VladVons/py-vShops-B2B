@@ -47,7 +47,9 @@ class TParser(TParserBase):
                         'name': Name,
                         'images': Images,
                         'category': Category,
-                        'features': Features
+                        'features': Features,
+                        'part_code': DeepGetByList(Data, ['GeneralInfo', 'BrandPartCode'], ''),
+                        'descr': DeepGetByList(Data, ['GeneralInfo', 'SummaryDescription', 'LongSummaryDescription'], '')
                     }
                     #self._WriteFile('ice-2.json', Data)
                     if (Res):

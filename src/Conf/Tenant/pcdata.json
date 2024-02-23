@@ -26,7 +26,7 @@
                 }
             },
             "url_gspread": "https://docs.google.com/spreadsheets/d/xxxxxxxxxx",
-            "used": true,
+            "cond": "used",
             "sheet": {
                 "COMPUTERS": {
                     "skip": 1,
