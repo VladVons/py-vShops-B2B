@@ -1,23 +1,22 @@
 {
     "plugin": {
-        "In_pcdata_gspread": {
+        "In_boda_gspread": {
             "class": "In_GSpread",
-            "url": "https://docs.google.com/spreadsheets/d/1L0ZDsTXlEDWHAY9cI22FqhMQ051b82wc",
-            "file": "pcdata.xlsx"
+            "url": "https://docs.google.com/spreadsheets/d/1INnMJeNY5v0pz3ycp-Jw2RKd0BwWNJDsLfqGcPcuytk",
+            "file": "boda.xlsx"
         },
-        "In_pcdata": {
-            "class": "In_Price_pcdata_xlsx",
-            "file": "pcdata.xlsx",
+        "In_boda": {
+            "class": "In_Price_boda_xlsx",
+            "file": "boda.xlsx",
             "depends": [
-                "In_pcdata_gspread"
+                "-In_boda_gspread"
             ],
             "export": {
                 "Out_vShopTenant_db": {
                     "sql": {
-                        "tenant": "pcdata",
+                        "tenant": "boda",
                         "currency": "uah",
                         "idt_auto": true,
-                        "price_auto": false,
                         "product0": "model"
                     }
                 }
@@ -34,8 +33,9 @@
                         "disk": "HDD",
                         "ram": "RAM",
                         "os": "License",
-                        "dvd": "Optical drive",
+                        "dvd": "DVD",
                         "vga": "GPU",
+                        "qty":"Quantity",
                         "price_in": "PriceIn",
                         "price": "Price"
                     },
@@ -64,10 +64,11 @@
                     "header": 1,
                     "fields": {
                         "model": "Model",
-                        "screen": "Size",
-                        "grade": "Screen Grade",
-                        "color": "Frame color",
+                        "grade": "Grade",
                         "stand": "Stand",
+                        "screen": "Size",
+                        "color": "Color",
+                        "qty": "Quantity",
                         "price_in": "PriceIn",
                         "price": "Price"
                     },
@@ -76,34 +77,55 @@
                     },
                     "title": ["model", "screen", "grade", "color"]
                 },
-                "INDUSTRIAL MONITORS": {
+                "LAPTOPS": {
                     "skip": 1,
                     "header": 1,
                     "fields": {
                         "model": "Model",
-                        "screen": "Inches",
-                        "grade": "Screen Grade",
-                        "color": "Frame color",
+                        "screen": "Size",
+                        "cpu": "CPU",
+                        "disk": "HDD",
+                        "ram": "RAM",
+                        "os": "License",
+                        "matrix": "Matrix",
+                        "touch": "Touch",
+                        "qty": "Quantity",
                         "price_in": "PriceIn",
                         "price": "Price"
                     },
                     "attr": {
+                        "cpu_type": [
+                            ["get", ["cpu"]],
+                            ["split", ["-", 0]]
+                        ],
+                        "storage_size": [
+                            ["get", ["disk"]],
+                            ["split", [" ", 0]]
+                        ],
+                        "storage_type": [
+                            ["get", ["disk"]],
+                            ["split", [" ", 1]]
+                        ],
+                        "ram_size": "ram",
+                        "pc_os": "os",
                         "screen_size": "screen"
                     },
-                    "title": ["model", "screen", "grade", "color"]
+                    "title": ["model", "screen", "cpu", "ram", "disk", "matrix", "touch", "os"],
+                    "model": ["model", "cpu"]
                 },
                 "PRINTERS": {
                     "skip": 1,
                     "header": 1,
                     "fields": {
                         "model": "Model",
-                        "pages": "Page counter",
+                        "pages": "Page counter", 
+                        "qty": "Quantity",
                         "price_in": "PriceIn",
                         "price": "Price"
                     },
-                    "title": ["model"]
+                    "title": ["model"],
+                    "model": ["model"]
                 }
- 
             }
         }
     }

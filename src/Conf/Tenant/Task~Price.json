@@ -4,8 +4,7 @@
     "include": [
         "boda.json",
         "pcdata.json",
-        "mdm_t.json",
-        "mdm_x.json"
+        "mdm.json"
     ],
     "plugins": [
         "Out_vShopTenant_db",
@@ -13,7 +12,7 @@
     ],
     "common": {
         "sleep_loop": 0.01,
-        "save_cache": true
+        "save_cache": false
     },
     "plugin": {
         "Out_vShopTenant_db": {
@@ -38,9 +37,6 @@
             "db_list": {
                 "len": 50
             }
-        },
-        "In_GSpread": {
-            "skip": false
         }
     }
 }

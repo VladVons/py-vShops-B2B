@@ -39,6 +39,23 @@
                         "price_in": "PriceIn",
                         "price": "Price"
                     },
+                   "attr": {
+                        "cpu_type": [
+                            ["get", ["cpu"]],
+                            ["split", ["-", 0]]
+                        ],
+                        "storage_size": [
+                            ["get", ["disk"]],
+                            ["split", [" ", 0]]
+                        ],
+                        "storage_type": [
+                            ["get", ["disk"]],
+                            ["split", [" ", 1]]
+                        ],
+                        "ram_size": "ram",
+                        "pc_case_type": "case",
+                        "pc_os": "os"
+                    },
                     "title": ["model", "case", "cpu", "ram", "disk", "vga", "os"],
                     "model": ["model", "case", "cpu"]
                 },
@@ -54,6 +71,9 @@
                         "qty": "Quantity",
                         "price_in": "PriceIn",
                         "price": "Price"
+                    },
+                    "attr": {
+                        "screen_size": "screen"
                     },
                     "title": ["model", "screen", "grade", "color"]
                 },
@@ -72,6 +92,23 @@
                           "qty": "Quantity",
                         "price_in": "PriceIn",
                         "price": "Price"
+                    },
+                   "attr": {
+                       "cpu_type": [
+                            ["get", ["cpu"]],
+                            ["split", ["-", 0]]
+                        ],
+                        "storage_size": [
+                            ["get", ["disk"]],
+                            ["split", [" ", 0]]
+                        ],
+                        "storage_type": [
+                            ["get", ["disk"]],
+                            ["split", [" ", 1]]
+                        ],
+                        "ram_size": "ram",
+                        "pc_os": "os",
+                        "screen_size": "screen"
                     },
                     "title": ["model", "screen", "cpu", "ram", "disk", "matrix", "touch", "os"],
                     "model": ["model", "cpu"]

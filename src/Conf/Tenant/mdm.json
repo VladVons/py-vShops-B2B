@@ -1,73 +1,98 @@
 {
     "plugin": {
+        "In_mdm_gspread": {
+            "class": "In_GSpread",
+            "url": "https://docs.google.com/spreadsheets/d/1Hc0olzpJdsOKrR_4ictPY5QLw0vxU0fO",
+            "file": "mdm.xlsx"
+        },
         "In_mdm": {
-            "class": "In_Price_mdm_xlsx",
+            "class": "In_Price_boda_xlsx",
             "file": "mdm.xlsx",
+            "depends": [
+                "In_mdm_gspread"
+            ],
             "export": {
                 "Out_vShopTenant_db": {
                     "sql": {
                         "tenant": "mdm",
-                        "currency": "eur",
+                        "currency": "uah",
                         "idt_auto": true,
                         "product0": "model"
                     }
-                },
-                "Out_Save_txt": {
-                    "TDbProductEx": {
-                        "len": 70,
-                        "fields": ["category_id", "model", "name", "available", "price_in"]
-                    }
                 }
             },
+            "cond": "used",
             "sheet": {
-                "Desktops": {
+                "COMPUTERS": {
                     "skip": 1,
+                    "header": 1,
                     "fields": {
-                        "case": 1,
-                        "qty": 2,
-                        "manufacture": 3,
-                        "model": 4,
-                        "cpu": 5,
-                        "ram": 6,
-                        "disk": 7,
-                        "os": 8,
-                        "price_in": 10,
-                        "grade": 11
+                        "model": "Model",
+                        "cpu": "CPU",
+                        "case": "Case type",
+                        "disk": "HDD",
+                        "ram": "RAM",
+                        "os": "License",
+                        "vga": "GPU",
+                        "qty":"Quantity",
+                        "price_in": "PriceIn",
+                        "price": "Price"
                     },
-                    "title": [["manufacture", "model"], "case", "cpu", "ram", "disk", "os", "grade"],
-                    "model": ["manufacture", "model", "case", "cpu"]
+                    "attr": {
+                       "cpu_type": [
+                            ["get", ["cpu"]],
+                            ["split", ["-", 0]]
+                        ],
+                        "storage_size": [
+                            ["get", ["disk"]],
+                            ["split", [" ", 0]]
+                        ],
+                        "storage_type": [
+                            ["get", ["disk"]],
+                            ["split", [" ", 1]]
+                        ],
+                        "ram_size": "ram",
+                        "pc_case_type": "case",
+                        "pc_os": "os"
+                    },
+                    "title": ["model", "case", "cpu", "ram", "disk", "vga", "os"],
+                    "model": ["model", "case", "cpu"]
                 },
-                "Monitors": {
+                "LAPTOPS": {
                     "skip": 1,
+                    "header": 1,
                     "fields": {
-                        "qty": 1,
-                        "category": 2,
-                        "screen": 4,
-                        "manufacture": 5,
-                        "model": 6,
-                        "price_in": 7,
-                        "grade": 8
+                        "model": "Model",
+                        "screen": "Size",
+                        "cpu": "CPU",
+                        "disk": "HDD",
+                        "ram": "RAM",
+                        "os": "License",
+                        "matrix": "Matrix",
+                        "touch": "Touch",
+                        "qty": "Quantity",
+                        "price_in": "PriceIn",
+                        "price": "Price"
                     },
-                    "title": [["manufacture", "model"], "screen", "grade"],
-                    "model": ["manufacture", "model"]
-                },
-                "Laptopy": {
-                    "skip": 1,
-                    "fields": {
-                        "category": 1,
-                        "qty": 2,
-                        "manufacture": 3,
-                        "model": 4,
-                        "cpu": 5,
-                        "ram": 6,
-                        "disk": 7,
-                        "os": 8,
-                        "resolution": 9,
-                        "price_in": 11,
-                        "grade": 12
+                    "attr": {
+                       "cpu_type": [
+                            ["get", ["cpu"]],
+                            ["split", ["-", 0]]
+                        ],
+                        "storage_size": [
+                            ["get", ["disk"]],
+                            ["split", [" ", 0]]
+                        ],
+                        "storage_type": [
+                            ["get", ["disk"]],
+                            ["split", [" ", 1]]
+                        ],
+                        "ram_size": "ram",
+                        "pc_os": "os",
+                        "screen_size": "screen"
                     },
-                    "title": [["manufacture", "model"], "cpu", "ram", "disk", ["resolution", "screen"], "os", "grade"],
-                    "model": ["manufacture", "model", "cpu"]
+                    "title": ["model", "screen", "cpu", "ram", "disk", "matrix", "touch", "os"],
+                    "model": ["model", "cpu"]
                 }
             }
         }

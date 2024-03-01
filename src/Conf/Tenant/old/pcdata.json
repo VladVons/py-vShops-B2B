@@ -1,16 +1,8 @@
 {
     "plugin": {
-        "In_pcdata_gspread": {
-            "class": "In_GSpread",
-            "url": "https://docs.google.com/spreadsheets/d/1L0ZDsTXlEDWHAY9cI22FqhMQ051b82wc",
-            "file": "pcdata.xlsx"
-        },
         "In_pcdata": {
             "class": "In_Price_pcdata_xlsx",
             "file": "pcdata.xlsx",
-            "depends": [
-                "In_pcdata_gspread"
-            ],
             "export": {
                 "Out_vShopTenant_db": {
                     "sql": {
@@ -19,6 +11,17 @@
                         "idt_auto": true,
                         "price_auto": false,
                         "product0": "model"
+                    }
+                },
+                "Out_Save_txt": {
+                    "TDbProductEx": {
+                        "len": 70,
+                        "fields": ["category_id", "code", "name", "available", "price_in"]
+                    }
+                },
+                "Out_Save_xlsx": {
+                    "TDbProductEx": {
+                        "fields": ["category_id", "code", "name", "available", "price_in"]
                     }
                 }
             },
@@ -40,7 +43,7 @@
                         "price": "Price"
                     },
                     "attr": {
-                        "cpu_type": [
+                       "cpu_type": [
                             ["get", ["cpu"]],
                             ["split", ["-", 0]]
                         ],

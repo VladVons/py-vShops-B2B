@@ -1,0 +1,75 @@
+{
+    "plugin": {
+        "In_mdm": {
+            "class": "In_Price_mdm_xlsx",
+            "file": "mdm.xlsx",
+            "export": {
+                "Out_vShopTenant_db": {
+                    "sql": {
+                        "tenant": "mdm",
+                        "currency": "eur",
+                        "idt_auto": true,
+                        "product0": "model"
+                    }
+                },
+                "Out_Save_txt": {
+                    "TDbProductEx": {
+                        "len": 70,
+                        "fields": ["category_id", "model", "name", "available", "price_in"]
+                    }
+                }
+            },
+            "sheet": {
+                "Desktops": {
+                    "skip": 1,
+                    "fields": {
+                        "case": 1,
+                        "qty": 2,
+                        "manufacture": 3,
+                        "model": 4,
+                        "cpu": 5,
+                        "ram": 6,
+                        "disk": 7,
+                        "os": 8,
+                        "price_in": 10,
+                        "grade": 11
+                    },
+                    "title": [["manufacture", "model"], "case", "cpu", "ram", "disk", "os", "grade"],
+                    "model": ["manufacture", "model", "case", "cpu"]
+                },
+                "Monitors": {
+                    "skip": 1,
+                    "fields": {
+                        "qty": 1,
+                        "category": 2,
+                        "screen": 4,
+                        "manufacture": 5,
+                        "model": 6,
+                        "price_in": 7,
+                        "grade": 8
+                    },
+                    "title": [["manufacture", "model"], "screen", "grade"],
+                    "model": ["manufacture", "model"]
+                },
+                "Laptopy": {
+                    "skip": 1,
+                    "fields": {
+                        "category": 1,
+                        "qty": 2,
+                        "manufacture": 3,
+                        "model": 4,
+                        "cpu": 5,
+                        "ram": 6,
+                        "disk": 7,
+                        "os": 8,
+                        "resolution": 9,
+                        "price_in": 11,
+                        "grade": 12
+                    },
+                    "title": [["manufacture", "model"], "cpu", "ram", "disk", ["resolution", "screen"], "os", "grade"],
+                    "model": ["manufacture", "model", "cpu"]
+                }
+            }
+        }
+    }
+}
