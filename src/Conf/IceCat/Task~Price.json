@@ -2,8 +2,8 @@
     "dir_data": "./Data/IceCat",
     "comment": "IceCat",
     "plugins": [
-        "-mdm",
-        "pcdata",
+        "mdm",
+        "-pcdata",
         "-boda"
     ],
     "common": {

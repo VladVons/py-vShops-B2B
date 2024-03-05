@@ -1,0 +1,19 @@
+{
+    "plugin": {
+        "In_uttc": {
+            "class": "In_Price_uttc_json",
+            "file": "uttc.json",
+            "encoding": "cp1251",
+            "export": {
+                "Out_vShopTenant_db": {
+                    "sql": {
+                        "tenant": "uttc",
+                        "product0": "model",
+                        "currency": "usd",
+                        "idt_auto": false
+                    }
+                }
+            }
+        }
+    }
+}

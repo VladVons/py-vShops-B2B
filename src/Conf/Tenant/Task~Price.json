@@ -4,11 +4,12 @@
     "include": [
         "boda.json",
         "pcdata.json",
-        "mdm.json"
+        "mdm.json",
+        "uttc.json"
     ],
     "plugins": [
-        "Out_vShopTenant_db",
-        "-Out_Save_txt"
+        "-Out_vShopTenant_db",
+        "Out_Save_txt"
     ],
     "common": {
         "sleep_loop": 0.01,
@@ -22,16 +23,18 @@
             },
             "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
             "depends": [
-                "In_boda",
+                "-In_boda",
                 "-In_pcdata",
-                "-In_mdm_x"
+                "-In_mdm_x",
+                "In_uttc"
             ],
             "img_loader": "{% file Conf/Task.SrvCtrl.Api.json:loader.img %}",
             "img_conf": "{% file Conf/Task.SrvImg.Api.json %}"
         },
         "Out_Save_txt" : {
             "depends": [
-                "In_mdm_t"
+                "-In_mdm",
+                "In_uttc"
             ],
             "dir": "./Data/Pl/Out",
             "db_list": {

@@ -10,8 +10,8 @@
             "purpose":["debug-in-terminal"],
             "justMyCode": true,
             "__args": ["--conf", "System"],
-            "args": ["--conf", "IceCat"],
-            "_args": ["--conf", "Tenant"],
+            "_args": ["--conf", "IceCat"],
+            "args": ["--conf", "Tenant"],
             "env": {"name": "EnvVal"}
          }
     ]
