@@ -27,7 +27,7 @@ class TProduct(TParser_dbl):
 
         Xlat = [
             ['article', 'stock_quantity', 'price_dealer', 'manufacturer_name'],
-            ['code',    'qty',            'price_in',     'vendor']
+            ['code',    'qty',            'price',        'vendor']
         ]
         for xSrc, xDst in zip(*Xlat):
             self.CopyAs(xSrc, xDst, aRow, Rec)

@@ -1,0 +1,28 @@
+{
+    "dir_data": "./Data/Product0",
+    "comment": "Product0",
+    "plugins": [
+        "Out_vShopCrawl_db"
+    ],  
+    "common": {
+        "sleep_loop": 0.01,
+        "save_cache": false
+    },
+    "plugin": {
+       "Out_vShopCrawl_db": {
+            "sql": {
+                "parts": 10,
+                "lang_id": 1,
+                "max_conn": 1,
+                "rand_sleep": [0.1, 1.1],
+                "parser": "listex_info"
+            },
+            "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
+            "depends": [
+                "In_Crawl_ean0_txt"
+            ],
+            "img_loader": "{% file Conf/Task.SrvCtrl.Api.json:loader.img %}",
+            "img_conf": "{% file Conf/Task.SrvImg.Api.json %}"
+        }
+    }
+}
