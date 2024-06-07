@@ -18,6 +18,7 @@ class TSqlConf():
     tenant: str
     parts: int = 100
 
+
 class TSql(TSqlBase):
     def __init__(self, aDb: TDbPg, aSqlConf: TSqlConf):
         super().__init__(aDb)

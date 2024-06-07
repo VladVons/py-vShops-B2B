@@ -9,7 +9,8 @@
     ],
     "plugins": [
         "-Out_vShopTenant_db",
-        "Out_Save_txt"
+        "-Out_Save_txt",
+        "Out_Save_xlsx"
     ],
     "common": {
         "sleep_loop": 0.01,
@@ -25,21 +26,29 @@
             "depends": [
                 "-In_boda",
                 "-In_pcdata",
-                "-In_mdm_x",
-                "In_uttc"
+                "In_mdm",
+                "-In_uttc"
             ],
             "img_loader": "{% file Conf/Task.SrvCtrl.Api.json:loader.img %}",
             "img_conf": "{% file Conf/Task.SrvImg.Api.json %}"
         },
         "Out_Save_txt" : {
             "depends": [
-                "-In_mdm",
-                "In_uttc"
+                "In_mdm",
+                "-In_uttc",
+                "Out_vShopTenantModelUnknown_db"
             ],
-            "dir": "./Data/Pl/Out",
             "db_list": {
-                "len": 50
+                "len": 60
             }
+        },
+        "Out_Save_xlsx" : {
+            "depends": [
+                "Out_vShopTenantModelUnknown_db"
+            ]
+        },
+        "Out_vShopTenantModelUnknown_db" : {
+            "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}"
         }
     }
 }

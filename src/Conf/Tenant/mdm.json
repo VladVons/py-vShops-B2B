@@ -9,7 +9,7 @@
             "class": "In_Price_boda_xlsx",
             "file": "mdm.xlsx",
             "depends": [
-                "In_mdm_gspread"
+                "-In_mdm_gspread"
             ],
             "export": {
                 "Out_vShopTenant_db": {
