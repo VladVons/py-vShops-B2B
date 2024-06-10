@@ -105,11 +105,8 @@ class TPriceMonit(TParser_xlsx):
 
 
 class TPriceNotebook(TPricePC):
-    def _Filter(self, aRow: dict):
-        return (not aRow.get('price_in'))
-
     def _Fill(self, aRow: dict):
-        Val = aRow.get('category')
+        Val = aRow.get('screen')
         Data = re.findall(r'(\d+)', Val)
         if (Data):
             aRow['screen'] = Data[0]

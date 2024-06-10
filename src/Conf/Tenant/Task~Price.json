@@ -8,15 +8,18 @@
         "uttc.json"
     ],
     "plugins": [
-        "-Out_vShopTenant_db",
+        "Out_vShopTenant_db",
         "-Out_Save_txt",
-        "Out_Save_xlsx"
+        "-Out_Save_xlsx"
     ],
     "common": {
         "sleep_loop": 0.01,
         "save_cache": false
     },
     "plugin": {
+        "Out_vShopTenantModelUnknown_db" : {
+            "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}"
+        },
         "Out_vShopTenant_db": {
             "sql": {
                 "parts": 10,
@@ -25,8 +28,8 @@
             "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
             "depends": [
                 "-In_boda",
-                "-In_pcdata",
-                "In_mdm",
+                "In_pcdata",
+                "-In_mdm",
                 "-In_uttc"
             ],
             "img_loader": "{% file Conf/Task.SrvCtrl.Api.json:loader.img %}",
@@ -34,9 +37,10 @@
         },
         "Out_Save_txt" : {
             "depends": [
-                "In_mdm",
+                "-In_mdm",
+                "In_pcdata",
                 "-In_uttc",
-                "Out_vShopTenantModelUnknown_db"
+                "-Out_vShopTenantModelUnknown_db"
             ],
             "db_list": {
                 "len": 60
@@ -46,9 +50,6 @@
             "depends": [
                 "Out_vShopTenantModelUnknown_db"
             ]
-        },
-        "Out_vShopTenantModelUnknown_db" : {
-            "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}"
         }
     }
 }

@@ -2,7 +2,8 @@
     "dir_data": "./Data/IceCat",
     "comment": "IceCat",
     "plugins": [
-        "mdm",
+        "all",
+        "-mdm",
         "-pcdata",
         "-boda"
     ],
@@ -38,6 +39,17 @@
                 "In_Crawl_icecat_xlsx"
             ]
         },
+        "Out_vShopTenantAllModel_db": {
+            "sql": {
+                "lang": "ua",
+                "parts": 50
+            },
+            "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
+            "depends": [
+                "-Out_vShopCrawl_db",
+                "In_Crawl_icecat_xlsx"
+            ]
+        },
         "In_Crawl_icecat_xlsx": {
             "file": "-MyFile-",
             "sheet": {
@@ -45,12 +57,23 @@
                     "skip": 1,
                     "fields": {
                         "model": 1,
-                        "code": 2,
-                        "url": 3,
-                        "comment": 4
+                        "code": 2
                     }
                 }
             }
+        },
+        "all": {
+            "class": "Fake",
+            "joins": {
+                "In_Crawl_icecat_xlsx": {
+                    "file": "icecat-all.xlsx"
+                }
+            },
+            "depends": [
+                "-In_Crawl_icecat_xlsx",
+                "-Out_vShopCrawl_db",
+                "Out_vShopTenantAllModel_db"
+            ]
         },
         "mdm": {
             "class": "Fake",

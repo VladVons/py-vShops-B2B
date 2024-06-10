@@ -3,11 +3,11 @@
         "In_pcdata_gspread": {
             "class": "In_GSpread",
             "url": "https://docs.google.com/spreadsheets/d/1L0ZDsTXlEDWHAY9cI22FqhMQ051b82wc",
-            "file": "pcdata.xlsx"
+            "file": "price-pcdata.xlsx"
         },
         "In_pcdata": {
             "class": "In_Price_pcdata_xlsx",
-            "file": "pcdata.xlsx",
+            "file": "price-pcdata.xlsx",
             "depends": [
                 "In_pcdata_gspread"
             ],
@@ -58,6 +58,39 @@
                     },
                     "title": ["model", "case", "cpu", "ram", "disk", "vga", "os"],
                     "model": ["model", "case", "cpu"]
+                },
+                "ALL IN ONES": {
+                    "skip": 1,
+                    "header": 1,
+                    "fields": {
+                        "model": "Model",
+                        "cpu": "CPU Number",
+                        "disk": "HDD",
+                        "ram": "Memory",
+                        "os": "License",
+                        "screen": "Screen size",
+                        "price_in": "PriceIn",
+                        "price": "Price"
+                    },
+                    "attr": {
+                        "cpu_type": [
+                            ["get", ["cpu"]],
+                            ["split", ["-", 0]]
+                        ],
+                        "storage_size": [
+                            ["get", ["disk"]],
+                            ["split", [" ", 0]]
+                        ],
+                        "storage_type": [
+                            ["get", ["disk"]],
+                            ["split", [" ", 1]]
+                        ],
+                        "screen_size": "screen",
+                        "ram_size": "ram",
+                        "pc_os": "os"
+                    },
+                    "title": ["model", "screen", "cpu", "ram", "disk", "os"],
+                    "model": ["model", "screen", "cpu"]
                 },
                 "MONITORS": {
                     "skip": 1,
