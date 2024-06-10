@@ -70,6 +70,7 @@
                         "os": "License",
                         "matrix": "Matrix",
                         "touch": "Touch",
+                        "vga": "GPU",
                         "qty": "Quantity",
                         "price_in": "PriceIn",
                         "price": "Price"
@@ -91,7 +92,7 @@
                         "pc_os": "os",
                         "screen_size": "screen"
                     },
-                    "title": ["model", "screen", "cpu", "ram", "disk", "matrix", "touch", "os"],
+                    "title": ["model", "screen", "cpu", "ram", "disk", "matrix", "touch", "vga", "os"],
                     "model": ["model", "cpu"]
                 }
             }
