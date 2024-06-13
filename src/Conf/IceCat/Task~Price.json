@@ -46,7 +46,7 @@
             },
             "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
             "depends": [
-                "-Out_vShopCrawl_db",
+                "Out_vShopCrawl_db",
                 "In_Crawl_icecat_xlsx"
             ]
         },
