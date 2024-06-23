@@ -38,7 +38,7 @@
         },
         "Out_vShopNoDescr_db": {
             "sql": {
-                "parts": 2,
+                "parts": 5,
                 "lang": "ua",
                 "tenant": "mdm"
             },
