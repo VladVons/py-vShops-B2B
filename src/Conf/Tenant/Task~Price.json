@@ -40,7 +40,8 @@
             "sql": {
                 "parts": 10,
                 "lang": "ua",
-                "tenant": "mdm"
+                "tenant": "mdm",
+                "categories": ["Ноутбук"]
             },
             "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}"
         },
