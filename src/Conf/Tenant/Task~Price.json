@@ -41,7 +41,7 @@
                 "parts": 10,
                 "lang": "ua",
                 "tenant": "mdm",
-                "categories": ["Ноутбук"]
+                "categories": ["Ноутбук", "Комп'ютер", "Монітор"]
             },
             "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}"
         },
