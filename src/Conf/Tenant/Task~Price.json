@@ -8,8 +8,8 @@
         "uttc.json"
     ],
     "plugins": [
-        "-Out_vShopTenant_db",
-        "Out_vShopNoDescr_db",
+        "Out_vShopTenant_db",
+        "-Out_vShopNoDescr_db",
         "-Out_Save_txt",
         "-Out_Save_xlsx"
     ],
@@ -29,8 +29,8 @@
             "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
             "depends": [
                 "-In_boda",
-                "-In_pcdata",
-                "In_mdm",
+                "In_pcdata",
+                "-In_mdm",
                 "-In_uttc"
             ],
             "img_loader": "{% file Conf/Task.SrvCtrl.Api.json:loader.img %}",
@@ -40,8 +40,8 @@
             "sql": {
                 "parts": 10,
                 "lang": "ua",
-                "tenant": "mdm",
-                "categories": ["Ноутбук", "Комп'ютер", "Монітор"]
+                "tenant": "pcdata",
+                "categories": ["Ноутбук", "Комп'ютер"]
             },
             "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}"
         },
