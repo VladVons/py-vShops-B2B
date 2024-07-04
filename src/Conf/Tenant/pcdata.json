@@ -92,6 +92,39 @@
                     "title": ["model", "screen", "cpu", "ram", "disk", "os"],
                     "model": ["model", "screen", "cpu"]
                 },
+                "LAPTOPS": {
+                    "skip": 1,
+                    "header": 1,
+                    "fields": {
+                        "model": "Model",
+                        "cpu": "CPU Number",
+                        "disk": "HDD Size in MB",
+                        "ram": "Memory",
+                        "os": "License Type",
+                        "screen": "Screen size",
+                        "price_in": "PriceIn",
+                        "price": "Price"
+                    },
+                    "attr": {
+                        "cpu_type": [
+                            ["get", ["cpu"]],
+                            ["split", ["-", 0]]
+                        ],
+                        "storage_size": [
+                            ["get", ["disk"]],
+                            ["split", [" ", 0]]
+                        ],
+                        "storage_type": [
+                            ["get", ["disk"]],
+                            ["split", [" ", 1]]
+                        ],
+                        "screen_size": "screen",
+                        "ram_size": "ram",
+                        "pc_os": "os"
+                    },
+                    "title": ["model", "screen", "cpu", "ram", "disk", "os"],
+                    "model": ["model", "screen", "cpu"]
+                },
                 "MONITORS": {
                     "skip": 1,
                     "header": 1,
