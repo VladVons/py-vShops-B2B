@@ -29,8 +29,8 @@
             "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
             "depends": [
                 "-In_boda",
-                "-In_pcdata",
-                "In_mdm",
+                "In_pcdata",
+                "-In_mdm",
                 "-In_uttc"
             ],
             "img_loader": "{% file Conf/Task.SrvCtrl.Api.json:loader.img %}",
