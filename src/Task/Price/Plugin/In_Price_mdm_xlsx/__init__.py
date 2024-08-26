@@ -32,8 +32,8 @@ class TIn_Price_mdm_xlsx(TPluginBase):
                 })
         aDbProductEx.Sort(['code'])
 
-    async def Run(self):
-        XTable = {
+    def GetHandlers(self) -> dict:
+        return {
             'Desktops': {
                 'parser': TPricePC, 'category_id': 1, 'category': 'Компютер'
             },
@@ -41,14 +41,15 @@ class TIn_Price_mdm_xlsx(TPluginBase):
                 'parser': TPriceMonit,'category_id': 2, 'category': 'Монітор', 'enable': not False
             },
             'Laptopy': {
-                'parser': TPriceNotebook,'category_id': 3, 'category': 'Ноутбук',
+                'parser': TPriceNotebook,'category_id': 3, 'category': 'Ноутбук'
             }
         }
 
+    async def Run(self):
         DbProductEx = TDbProductEx()
         DbCategory = TDbCategory()
         Engine = None
-        for xKey, xVal in XTable.items():
+        for xKey, xVal in self.GetHandlers().items():
             if (xVal.get('enable', True)):
                 Parser = xVal['parser'](self)
                 if (Engine):

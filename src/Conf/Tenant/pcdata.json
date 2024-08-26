@@ -123,7 +123,7 @@
                         "pc_os": "os"
                     },
                     "title": ["model", "screen", "cpu", "ram", "disk", "os"],
-                    "model": ["model", "screen", "cpu"]
+                    "model": ["model", "cpu"]
                 },
                 "MONITORS": {
                     "skip": 1,

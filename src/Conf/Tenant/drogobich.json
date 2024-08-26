@@ -1,0 +1,57 @@
+{
+    "plugin": {
+        "In_drogobich": {
+            "class": "In_Price_pcdata_xlsx.ExtDrogobich",
+            "file": "price-drogobich.xlsx",
+            "depends": [
+                "-In_pcdata_gspread"
+            ],
+            "export": {
+                "Out_vShopTenant_db": {
+                    "sql": {
+                        "tenant": "drogobich",
+                        "currency": "uah",
+                        "idt_auto": true,
+                        "price_auto": false,
+                        "product0": "model"
+                    }
+                }
+            },
+            "cond": "used",
+            "sheet": {
+                "Laptops": {
+                    "skip": 1,
+                    "header": 1,
+                    "fields": {
+                        "model": "model",
+                        "cpu": "cpu",
+                        "disk": "disk",
+                        "ram": "ram",
+                        "screen": "screen",
+                        "os": "os",
+                        "price_in": "price_in",
+                        "price": "price"
+                    },
+                    "attr": {
+                        "cpu_type": [
+                            ["get", ["cpu"]],
+                            ["split", ["-", 0]]
+                        ],
+                        "storage_size": [
+                            ["get", ["disk"]],
+                            ["split", [" ", 0]]
+                        ],
+                        "storage_type": [
+                            ["get", ["disk"]],
+                            ["split", [" ", 1]]
+                        ],
+                        "screen_size": "screen",
+                        "ram_size": "ram"
+                    },
+                    "title": ["model", "screen", "cpu", "ram", "disk"],
+                    "model": ["model", "cpu"]
+                }
+            }
+        }
+    }
+}
