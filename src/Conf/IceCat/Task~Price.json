@@ -22,10 +22,15 @@
             },
             "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
             "depends": [
-                "In_Crawl_icecat_xlsx"
+                "In_Crawl_icecat_xlsx",
+                "RunApp"
             ],
             "img_loader": "{% file Conf/Task.SrvCtrl.Api.json:loader.img %}",
             "img_conf": "{% file Conf/Task.SrvImg.Api.json %}"
+        },
+        "RunApp": {
+            "app": "~/Projects/py/py-vShops/src/vShops.sh",
+            "args": "test1 -i test2"
         },
         "Out_vShopTenantModel_db": {
             "sql": {
