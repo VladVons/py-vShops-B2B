@@ -12,8 +12,8 @@ class TMain(TParser_xlsx):
         super().__init__(aParent, TDbCrawl())
 
     def _Fill(self, aRow: dict):
-        aCode = aRow.get('code')
-        if (aCode):
+        aCode = aRow['code']
+        if (aRow['model'] and aCode):
             if (isinstance(aCode, str)):
                 aCode = aCode.strip()
             else:

@@ -31,8 +31,8 @@
             "depends": [
                 "-In_boda",
                 "-In_pcdata",
-                "-In_mdm",
-                "In_drogobich",
+                "In_mdm",
+                "-In_drogobich",
                 "-In_uttc"
             ],
             "img_loader": "{% file Conf/Task.SrvCtrl.Api.json:loader.img %}",
