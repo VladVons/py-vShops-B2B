@@ -30,7 +30,7 @@
         },
         "RunApp": {
             "app": "~/Projects/py/py-vShops/src/vShops.sh",
-            "args": "test1 -i test2"
+            "-args": "-i test"
         },
         "Out_vShopTenantModel_db": {
             "sql": {
