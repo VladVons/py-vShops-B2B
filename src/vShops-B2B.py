@@ -5,21 +5,34 @@
 
 import asyncio
 #
-from IncP import GetSysInfo
+from Inc.Util.Dict import DictToText, Filter
+from Inc.Misc.Info import GetSysInfo
+from Inc.Misc.Process import CheckSelfRunning
+from IncP import GetAppVer
 from IncP.Log import Log
-from Task.Main import TTask
+from Task.Main import TTask, Options
 
 
 def Run():
-    Info = GetSysInfo()
-    Log.Print(1, 'i', f'os: {Info["os"]}, python: {Info["python"]}')
+    Log.Print(1, 'i', '')
 
-    PyNeed = (3, 9, 0)
-    if (Info['python'] >= PyNeed):
-        Task = TTask().Run()
-        asyncio.run(Task)
+    AppVer = DictToText(GetAppVer(), '; ')
+    Log.Print(1, 'i', f'{AppVer}')
+
+    SysInfo = GetSysInfo()
+    Data = DictToText(Filter(SysInfo, ['os', 'python', 'user', 'uptime']), '; ')
+    Log.Print(1, 'i', f'{Data}')
+
+    PyNeed = (3, 10, 0)
+    if (SysInfo['python'] >= PyNeed):
+        if (Options.get('one_instance') and CheckSelfRunning()):
+            Log.Print(1, 'i', 'Application is already running')
+        else:
+            Task = TTask().Run()
+            asyncio.run(Task)
     else:
         print(f'Need python >= {PyNeed}')
+    Log.Print(1, 'i', 'Quit')
 
 if (__name__ == '__main__'):
     Run()

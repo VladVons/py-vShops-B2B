@@ -17,12 +17,12 @@
                 "rand_sleep": [0.1, 1.1],
                 "parser": "listex_info"
             },
-            "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
+            "auth": "{% file_json Conf/Task.SrvModel.Api.json:db_auth %}",
             "depends": [
                 "In_Crawl_ean0_txt"
             ],
-            "img_loader": "{% file Conf/Task.SrvCtrl.Api.json:loader.img %}",
-            "img_conf": "{% file Conf/Task.SrvImg.Api.json %}"
+            "img_loader": "{% file_json Conf/Task.SrvCtrl.Api.json:loader.img %}",
+            "img_conf": "{% file_json Conf/Task.SrvImg.Api.json %}"
         }
     }
 }

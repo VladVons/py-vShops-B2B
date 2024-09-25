@@ -8,7 +8,7 @@ from Task import Options
 
 class TPrice():
     async def Run(self, aParam: dict = None):
-        Plugin = TPluginApp(f'Conf/{Options.conf}')
+        Plugin = TPluginApp(f'Conf/{Options.get('conf')}')
         Plugin.Init('Task.Price')
         if (isinstance(aParam, dict)):
             for Key, Val in aParam.items():

@@ -2,7 +2,7 @@
     "plugin": {
        "Out_vShopClearProduct_db": {
             "class": "Out_vShopClear_db",
-            "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
+            "auth": "{% file_json Conf/Task.SrvModel.Api.json:db_auth %}",
             "tables": [
                 "reg_product_stock",
                 "hist_product_stock",
@@ -19,7 +19,7 @@
         },
        "Out_vShopClearProduct0_db": {
             "class": "Out_vShopClear_db",
-            "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
+            "auth": "{% file_json Conf/Task.SrvModel.Api.json:db_auth %}",
             "tables": [
                 "ref_product0",
                 "ref_product0_barcode",
@@ -33,7 +33,7 @@
         },
        "Out_vShopClearMisc_db": {
             "class": "Out_vShopClear_db",
-            "auth": "{% file Conf/Task.SrvModel.Api.json:db_auth %}",
+            "auth": "{% file_json Conf/Task.SrvModel.Api.json:db_auth %}",
             "tables": [
                 "hist_page_view",
                 "hist_session"
