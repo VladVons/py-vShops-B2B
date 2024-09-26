@@ -6,7 +6,7 @@
 import aiohttp
 from bs4 import BeautifulSoup
 #
-from Inc.Util.Obj import DeepGetByList
+from Inc.Var.Dict import DeepGetByList
 from .. import TParserBase
 
 

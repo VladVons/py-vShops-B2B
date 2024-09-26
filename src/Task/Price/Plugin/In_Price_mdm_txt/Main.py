@@ -10,7 +10,7 @@
 
 import re
 #
-from Inc.Util.Str import ToFloat
+from Inc.Var.Str import ToFloat
 from Inc.ParserX.Parser_txt import TParser_txt
 from IncP.Log import Log
 from ..CommonDb import TDbCategory, TDbProductEx

@@ -18,7 +18,7 @@ from bs4 import BeautifulSoup
 from Inc.Ean import TEan
 from Inc.Scheme.Scheme import TSoupScheme
 from Inc.Util.Mod import DynImport
-from Inc.Util.Obj import DeepGetByList
+from Inc.Var.Dict import DeepGetByList
 from IncP.Log import Log
 
 

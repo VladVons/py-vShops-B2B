@@ -9,7 +9,7 @@
 
 import re
 #
-from Inc.Util.Str import ToInt, ToFloat, ToBool
+from Inc.Var.Str import ToInt, ToFloat, ToBool
 from Inc.ParserX.Parser_xml import TParser_xml
 from ..CommonDb import TDbCategory, TDbProductEx
 

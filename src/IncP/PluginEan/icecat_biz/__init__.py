@@ -5,7 +5,7 @@
 
 import aiohttp
 #
-from Inc.Util.Obj import DeepGetByList
+from Inc.Var.Dict import DeepGetByList
 from .. import TParserBase
 
 

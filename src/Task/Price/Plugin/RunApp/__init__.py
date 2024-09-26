@@ -8,7 +8,7 @@ import asyncio
 import subprocess
 #
 from Inc.ParserX.Common import TPluginBase
-from Inc.Util.Obj import Iif
+from Inc.Var.Obj import Iif
 
 
 class TRunApp(TPluginBase):

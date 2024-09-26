@@ -8,7 +8,7 @@ import aiohttp
 from bs4 import BeautifulSoup
 #
 from Inc.Ean import TEan
-from Inc.Util.Obj import DeepGetByList
+from Inc.Var.Dict import DeepGetByList
 from IncP.Log import Log
 from .. import TParserBase
 
