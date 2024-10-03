@@ -3,10 +3,10 @@
 # License: GNU, see LICENSE for more details
 
 
-from .Main import TPrice
+from .Main import TMain
 
 #Depends = 'Task.Queue'
 
 def Main(_aConf) -> tuple:
-    Obj = TPrice()
+    Obj = TMain()
     return (Obj, Obj.Run())

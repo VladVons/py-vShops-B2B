@@ -6,7 +6,8 @@
 from Inc.PluginApp import TPluginApp
 from Task import App
 
-class TPrice():
+
+class TMain():
     async def Run(self, aParam: dict = None):
         Plugin = TPluginApp(f'Conf/{App.Options.get('conf')}')
         Plugin.Init('Task.Price')
